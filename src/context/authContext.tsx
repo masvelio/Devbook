@@ -2,16 +2,25 @@ import * as React from 'react';
 
 interface IAuthContext {
   user: boolean;
+  login: () => void;
+  logout: () => void;
 }
 
 const AuthContext = React.createContext({} as IAuthContext);
 AuthContext.displayName = 'AuthContext';
 
-const AuthProvider = ({ children }: { children: React.ReactNode }) => (
-  <AuthContext.Provider value={{ user: true }}>
-    {children}
-  </AuthContext.Provider>
-);
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
+  const login = () => setLoggedIn(true);
+  const logout = () => setLoggedIn(false);
+
+  return (
+    <AuthContext.Provider value={{ user: loggedIn, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 const useAuth = () => {
   const context = React.useContext(AuthContext);

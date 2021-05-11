@@ -13,9 +13,11 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import DesktopNav from './DesktopNav';
 import MobileNav from './MobileNav';
+import { useAuth } from '../../context/authContext';
 
 const Navigation = () => {
   const { isOpen, onToggle } = useDisclosure();
+  const { logout } = useAuth();
 
   return (
     <Box>
@@ -74,6 +76,7 @@ const Navigation = () => {
             _hover={{
               bg: 'pink.300',
             }}
+            onClick={logout}
           >
             Log out
           </Button>

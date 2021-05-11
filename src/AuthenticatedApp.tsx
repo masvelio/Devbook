@@ -1,19 +1,26 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { Container, Heading } from '@chakra-ui/react';
 
 import Navigation from './components/Navigation/Navigation';
 
-const Nav = () => <h1>NAV</h1>;
-const Dashboard = () => <h1>Dashboard</h1>;
+const Profile = React.lazy(() => import('./components/Profile/Profile'));
+const Developers = React.lazy(
+  () => import('./components/Developers/Developers')
+);
+
+const Jobs = () => <Heading my={6}>Jobs</Heading>;
 
 const AuthenticatedApp = () => (
   <>
     <Navigation />
-    <h1>Authenticated app ✅</h1>
-    <Switch>
-      <Route exact path="/nav" component={Nav} />
-      <Route path="/dashboard" component={Dashboard} />
-    </Switch>
+    <Container maxW="container.lg">
+      <Switch>
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/developers" component={Developers} />
+        <Route exact path="/jobs" component={Jobs} />
+      </Switch>
+    </Container>
   </>
 );
 
