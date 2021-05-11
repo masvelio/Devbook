@@ -1,38 +1,59 @@
 import * as React from 'react';
 import {
   ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
   theme,
+  Flex,
+  Stack,
+  Heading,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Box,
+  useColorModeValue,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra ?
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
+    <Flex
+      minH="100vh"
+      align="center"
+      justify="center"
+      bg={useColorModeValue('gray.50', 'gray.800')}
+    >
+      <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
+        <Stack align="center">
+          <Heading fontSize="4xl">Sign in to your account</Heading>
+        </Stack>
+        <Box
+          rounded="lg"
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow="lg"
+          p={8}
+        >
+          <Stack spacing={4}>
+            <FormControl id="email">
+              <FormLabel>Email address</FormLabel>
+              <Input type="email" />
+            </FormControl>
+            <FormControl id="password">
+              <FormLabel>Password</FormLabel>
+              <Input type="password" />
+            </FormControl>
+            <Stack spacing={10}>
+              <Button
+                bg="blue.400"
+                color="white"
+                _hover={{
+                  bg: 'blue.500',
+                }}
+              >
+                Sign in
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </Stack>
+    </Flex>
   </ChakraProvider>
 );
