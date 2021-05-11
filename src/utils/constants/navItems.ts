@@ -2,16 +2,16 @@ import { NavItem } from '../../types';
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Inspiration',
-    href: '#',
+    label: 'My profile',
+    href: '/profile',
   },
   {
-    label: 'Learn Design',
-    href: '#',
+    label: 'Developers',
+    href: '/developers',
   },
   {
-    label: 'Hire Designers',
-    href: '#',
+    label: 'Jobs',
+    href: '/jobs',
   },
 ];
 

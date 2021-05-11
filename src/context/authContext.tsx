@@ -8,7 +8,9 @@ const AuthContext = React.createContext({} as IAuthContext);
 AuthContext.displayName = 'AuthContext';
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => (
-  <AuthContext.Provider value={{ user: true }}>{children}</AuthContext.Provider>
+  <AuthContext.Provider value={{ user: true }}>
+    {children}
+  </AuthContext.Provider>
 );
 
 const useAuth = () => {

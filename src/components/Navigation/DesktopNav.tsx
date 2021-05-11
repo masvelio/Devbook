@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { Box, Link, Popover, PopoverTrigger, Stack } from '@chakra-ui/react';
+import { Box, Link, Stack } from '@chakra-ui/react';
+import { Link as RouteLink } from 'react-router-dom';
 
 import NAV_ITEMS from '../../utils/constants/navItems';
 import { NavItem } from '../../types';
 
 const DesktopNavLink = ({ label, href }: NavItem) => (
   <Link
+    as={RouteLink}
     p={2}
-    href={href ?? '#'}
+    to={href}
     fontSize="sm"
     fontWeight={500}
     color="gray.600"
@@ -24,11 +26,7 @@ const DesktopNav = () => (
   <Stack direction="row" spacing={4}>
     {NAV_ITEMS.map((navItem) => (
       <Box key={navItem.label}>
-        <Popover trigger="hover" placement="bottom-start">
-          <PopoverTrigger>
-            <DesktopNavLink {...navItem} />
-          </PopoverTrigger>
-        </Popover>
+        <DesktopNavLink {...navItem} />
       </Box>
     ))}
   </Stack>

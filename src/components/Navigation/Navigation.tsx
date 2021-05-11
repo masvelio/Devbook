@@ -6,7 +6,7 @@ import {
   IconButton,
   Button,
   Stack,
-  Collapse,
+  Fade,
   useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -64,9 +64,6 @@ const Navigation = () => {
           direction="row"
           spacing={6}
         >
-          <Button as="a" fontSize="sm" fontWeight={400} variant="link" href="#">
-            Sign In
-          </Button>
           <Button
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize="sm"
@@ -78,14 +75,17 @@ const Navigation = () => {
               bg: 'pink.300',
             }}
           >
-            Sign Up
+            Log out
           </Button>
         </Stack>
       </Flex>
-
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
+      {isOpen && (
+        <Box position="absolute" w="full">
+          <Fade in={isOpen}>
+            <MobileNav onClick={onToggle} />
+          </Fade>
+        </Box>
+      )}
     </Box>
   );
 };

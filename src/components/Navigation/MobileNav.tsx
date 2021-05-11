@@ -1,32 +1,38 @@
 import * as React from 'react';
 import { Flex, Link, Stack, Text } from '@chakra-ui/react';
+import { Link as RouteLink } from 'react-router-dom';
 
 import { NavItem } from '../../types';
 import NAV_ITEMS from '../../utils/constants/navItems';
 
-const MobileNavItem = ({ label, href }: NavItem) => (
+type OnClickType = { onClick: () => void };
+
+const MobileNavItem = ({ label, href, onClick }: NavItem & OnClickType) => (
   <Stack spacing={4}>
-    <Flex
-      py={2}
-      as={Link}
-      href={href ?? '#'}
-      justify="space-between"
-      align="center"
-      _hover={{
-        textDecoration: 'none',
-      }}
-    >
-      <Text fontWeight={600} color="gray.600">
-        {label}
-      </Text>
-    </Flex>
+    <Link as={RouteLink} to={href}>
+      <Flex
+        py={2}
+        as={Link}
+        href={href ?? '#'}
+        justify="space-between"
+        align="center"
+        _hover={{
+          textDecoration: 'none',
+        }}
+        onClick={onClick}
+      >
+        <Text fontWeight={600} color="gray.600">
+          {label}
+        </Text>
+      </Flex>
+    </Link>
   </Stack>
 );
 
-const MobileNav = () => (
+const MobileNav = ({ onClick }: OnClickType) => (
   <Stack bg="white" p={4} display={{ md: 'none' }}>
     {NAV_ITEMS.map((navItem) => (
-      <MobileNavItem key={navItem.label} {...navItem} />
+      <MobileNavItem key={navItem.label} {...navItem} onClick={onClick} />
     ))}
   </Stack>
 );
