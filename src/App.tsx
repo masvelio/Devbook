@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react';
 import {
   ChakraProvider,
   Box,
@@ -8,9 +8,9 @@ import {
   Code,
   Grid,
   theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+} from '@chakra-ui/react';
+import { ColorModeSwitcher } from './ColorModeSwitcher';
+import { Logo } from './Logo';
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -29,10 +29,10 @@ export const App = () => (
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn Chakra
+            Learn Chakra ?
           </Link>
         </VStack>
       </Grid>
     </Box>
   </ChakraProvider>
-)
+);
