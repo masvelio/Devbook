@@ -1,12 +1,15 @@
 import * as React from 'react';
 
-const AuthContext = React.createContext<{ value: string } | null>(null);
+interface IAuthContext {
+  user: boolean;
+}
 
+const AuthContext = React.createContext({} as IAuthContext);
 AuthContext.displayName = 'AuthContext';
 
-const AuthProvider = (
-  props: JSX.IntrinsicAttributes & React.ProviderProps<{ value: string } | null>
-) => <AuthContext.Provider value={{ value: 'string' }} {...props} />;
+const AuthProvider = ({ children }: { children: React.ReactNode }) => (
+  <AuthContext.Provider value={{ user: true }}>{children}</AuthContext.Provider>
+);
 
 const useAuth = () => {
   const context = React.useContext(AuthContext);

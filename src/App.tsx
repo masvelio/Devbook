@@ -9,17 +9,15 @@ import { Routes } from './Routes';
 
 export const App = () => (
   <React.StrictMode>
-    <AuthProvider value={{ value: 'something' }}>
-      <ChakraProvider theme={theme}>
-        <ColorModeScript />
-        <Router>
-          <ErrorBoundary>
-            <React.Suspense fallback="loading....">
-              <Routes />
-            </React.Suspense>
-          </ErrorBoundary>
-        </Router>
-      </ChakraProvider>
-    </AuthProvider>
+    <ChakraProvider theme={theme}>
+      <ColorModeScript />
+      <Router>
+        <ErrorBoundary>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </ErrorBoundary>
+      </Router>
+    </ChakraProvider>
   </React.StrictMode>
 );

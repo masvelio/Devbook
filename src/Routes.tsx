@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { useAuth } from './context/authContext';
 
-const Login = React.lazy(() => import('./components/Login'));
+const AuthenticatedApp = React.lazy(() => import('./AuthenticatedApp'));
+const UnauthenticatedApp = React.lazy(() => import('./UnauthenticatedApp'));
 
-const Comp = () => <h1>component</h1>;
-
-export const Routes = () => (
-  <Switch>
-    <Route exact path="/login" component={Login} />
-    <Route path="/" component={Comp} />
-  </Switch>
-);
+export const Routes = () => {
+  const { user } = useAuth();
+  return (
+    <React.Suspense fallback="loading...">
+      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+    </React.Suspense>
+  );
+};
