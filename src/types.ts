@@ -9,8 +9,10 @@ export interface Country {
 }
 
 export interface Developer {
+  id: number;
   firstName: string;
   lastName: string;
+  bio: string;
   imageUrl: string;
   country: Country;
   jobPosition: string;

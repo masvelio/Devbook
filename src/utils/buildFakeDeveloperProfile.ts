@@ -6,7 +6,7 @@ import countries from './constants/countries';
 import jobPositions from './constants/jobPositions';
 import technologies from './constants/technologies';
 
-const buildFakeDeveloperProfile = (): Developer => {
+const buildFakeDeveloperProfile = (): Omit<Developer, 'id' | 'bio'> => {
   const filteredCountries = countries.filter((c) => c.suggested);
 
   return {

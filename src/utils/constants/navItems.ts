@@ -9,10 +9,6 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Developers',
     href: '/developers',
   },
-  {
-    label: 'Jobs',
-    href: '/jobs',
-  },
 ];
 
 export default NAV_ITEMS;

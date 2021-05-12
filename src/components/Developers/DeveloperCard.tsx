@@ -12,11 +12,12 @@ import {
   HStack,
   Link,
 } from '@chakra-ui/react';
-import { StarIcon } from '@chakra-ui/icons';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { Link as RouteLink } from 'react-router-dom';
 
 import { Developer } from '../../types';
 import countryToFlag from '../../utils/countryToFlag';
+import Rating from '../Rating';
 
 const DeveloperCard = ({ developer }: { developer: Developer }) => {
   const {
@@ -29,6 +30,7 @@ const DeveloperCard = ({ developer }: { developer: Developer }) => {
     technologies,
     githubUrl,
     linkedInUrl,
+    id,
   } = developer;
 
   return (
@@ -54,17 +56,7 @@ const DeveloperCard = ({ developer }: { developer: Developer }) => {
           {countryToFlag(country.code)} {country.label}
         </Text>
         <Center>
-          <Box d="flex" mt="2" alignItems="center">
-            {Array(5)
-              .fill('')
-              .map((_, i) => (
-                <StarIcon
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={i}
-                  color={i < rating ? 'blue.500' : 'gray.300'}
-                />
-              ))}
-          </Box>
+          <Rating rating={rating} />
         </Center>
 
         <Stack
@@ -106,7 +98,12 @@ const DeveloperCard = ({ developer }: { developer: Developer }) => {
           </Link>
         </HStack>
         <HStack justify="center" mt={4}>
-          <Link w="full" isExternal _hover={{ textUnderline: 'none' }}>
+          <Link
+            w="full"
+            _hover={{ textUnderline: 'none' }}
+            as={RouteLink}
+            to={`/developers/${id}`}
+          >
             <Button isFullWidth size="sm" colorScheme="blue">
               See more
             </Button>
