@@ -10,7 +10,7 @@ const AuthContext = React.createContext({} as IAuthContext);
 AuthContext.displayName = 'AuthContext';
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
 
   const login = () => setLoggedIn(true);
   const logout = () => setLoggedIn(false);
