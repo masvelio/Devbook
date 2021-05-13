@@ -17,6 +17,10 @@ import {
   Stack,
   Text,
   Textarea,
+  Alert,
+  AlertIcon,
+  Fade,
+  Collapse,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { FaUser } from 'react-icons/fa';
@@ -45,6 +49,8 @@ const PersonalInfoForm = () => {
   const onSubmit: SubmitHandler<PersonalInfoFormValues> = (data) =>
     console.log(data);
 
+  console.log('errors', errors);
+
   return (
     <>
       <Box>
@@ -66,6 +72,38 @@ const PersonalInfoForm = () => {
                 Start completing your profile by providing basic information
                 about yourself.
               </Text>
+              <Stack mt={4} spacing={3} fontSize="sm">
+                <Collapse in={errors.firstName} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    First Name is required
+                  </Alert>
+                </Collapse>
+                <Collapse in={errors.lastName} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    Last Name is required
+                  </Alert>
+                </Collapse>
+                <Collapse in={errors.shortBio} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    Short Bio is required
+                  </Alert>
+                </Collapse>
+                <Collapse in={errors.country} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    Country is required
+                  </Alert>
+                </Collapse>
+                <Collapse in={errors.photoUrl} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    Photo URL is required
+                  </Alert>
+                </Collapse>
+              </Stack>
             </Box>
           </GridItem>
           <GridItem mt={[5, null, 0]} colSpan={{ md: 2 }}>

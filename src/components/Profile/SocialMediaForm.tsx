@@ -1,8 +1,11 @@
 import * as React from 'react';
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   chakra,
+  Collapse,
   FormControl,
   FormLabel,
   GridItem,
@@ -29,7 +32,12 @@ const SocialMediaForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      githubUrl: '',
+      linkedInUrl: '',
+    },
+  });
 
   const onSubmit: SubmitHandler<SocialMediaFormValues> = (data) =>
     console.log(data);
@@ -54,6 +62,21 @@ const SocialMediaForm = () => {
               >
                 Share your social media so you can be contacted more easily.
               </Text>
+
+              <Stack mt={4} spacing={3} fontSize="sm">
+                <Collapse in={!!errors.githubUrl} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    Github URL is required
+                  </Alert>
+                </Collapse>
+                <Collapse in={!!errors.linkedInUrl} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    LinkedIn URL is required
+                  </Alert>
+                </Collapse>
+              </Stack>
             </Box>
           </GridItem>
           <GridItem mt={[5, null, 0]} colSpan={{ md: 2 }}>
@@ -100,7 +123,7 @@ const SocialMediaForm = () => {
                         focusBorderColor="blue.400"
                         rounded="md"
                         {...register('githubUrl', {
-                          required: true,
+                          required: 'Github URL is required',
                         })}
                         isInvalid={!!errors.githubUrl}
                       />
@@ -137,7 +160,7 @@ const SocialMediaForm = () => {
                         focusBorderColor="blue.400"
                         rounded="md"
                         {...register('linkedInUrl', {
-                          required: true,
+                          required: 'LinkedIn URL is required',
                         })}
                         isInvalid={!!errors.linkedInUrl}
                       />

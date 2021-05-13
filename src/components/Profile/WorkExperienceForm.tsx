@@ -1,8 +1,11 @@
 import * as React from 'react';
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   chakra,
+  Collapse,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -59,6 +62,32 @@ const WorkExperienceForm = () => {
                 Enrich your profile by sharing information about your work
                 experience and the technologies you specialize in.
               </Text>
+              <Stack mt={4} spacing={3} fontSize="sm">
+                <Collapse in={errors.jobPosition} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    Job Position is required
+                  </Alert>
+                </Collapse>
+                <Collapse in={errors.yearsOfExp} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    Years of Experience is required
+                  </Alert>
+                </Collapse>
+                <Collapse in={errors.superPowers} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    Super Powers are required
+                  </Alert>
+                </Collapse>
+                <Collapse in={errors.technologies} animateOpacity>
+                  <Alert status="error">
+                    <AlertIcon />
+                    Technologies are required
+                  </Alert>
+                </Collapse>
+              </Stack>
             </Box>
           </GridItem>
           <GridItem mt={[5, null, 0]} colSpan={{ md: 2 }}>
