@@ -30,7 +30,7 @@ const MobileNavItem = ({ label, href, onClick }: NavItem & OnClickType) => (
 );
 
 const MobileNav = ({ onClick }: OnClickType) => (
-  <Stack bg="white" p={4} display={{ md: 'none' }}>
+  <Stack bg="white" p={4} display={{ md: 'none' }} shadow="2xl">
     {NAV_ITEMS.map((navItem) => (
       <MobileNavItem key={navItem.label} {...navItem} onClick={onClick} />
     ))}
