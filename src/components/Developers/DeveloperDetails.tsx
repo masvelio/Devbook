@@ -23,10 +23,12 @@ import {
   FaLinkedin,
 } from 'react-icons/fa';
 import { IconType } from 'react-icons';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 import useDeveloperDetails from '../../utils/hooks/useDeveloperDetails';
 import countryToFlag from '../../utils/countryToFlag';
 import Rating from '../Rating';
+import Loading from '../Loading';
 
 type DetailBlockProps = {
   CustomIcon: IconType;
@@ -188,4 +190,6 @@ const DeveloperDetails = () => {
   );
 };
 
-export default DeveloperDetails;
+export default withAuthenticationRequired(DeveloperDetails, {
+  onRedirecting: () => <Loading />,
+});

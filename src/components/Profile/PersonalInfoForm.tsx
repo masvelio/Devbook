@@ -19,7 +19,6 @@ import {
   Textarea,
   Alert,
   AlertIcon,
-  Fade,
   Collapse,
   useColorModeValue,
 } from '@chakra-ui/react';
@@ -48,8 +47,6 @@ const PersonalInfoForm = () => {
 
   const onSubmit: SubmitHandler<PersonalInfoFormValues> = (data) =>
     console.log(data);
-
-  console.log('errors', errors);
 
   return (
     <>

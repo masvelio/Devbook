@@ -11,13 +11,13 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { useAuth0 } from '@auth0/auth0-react';
 import DesktopNav from './DesktopNav';
 import MobileNav from './MobileNav';
-import { useAuth } from '../../context/authContext';
 
 const Navigation = () => {
   const { isOpen, onToggle } = useDisclosure();
-  const { logout } = useAuth();
+  const { logout } = useAuth0();
 
   return (
     <Box>
@@ -72,8 +72,7 @@ const Navigation = () => {
             fontWeight={600}
             colorScheme="blue"
             bg="blue.500"
-            href="#"
-            onClick={logout}
+            onClick={() => logout()}
           >
             Log out
           </Button>

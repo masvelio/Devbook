@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { SimpleGrid, Heading } from '@chakra-ui/react';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 import DeveloperCard from './DeveloperCard';
 import developers from '../../utils/constants/developers';
+import Loading from '../Loading';
 
 const Developers = () => (
   <>
@@ -18,4 +20,6 @@ const Developers = () => (
   </>
 );
 
-export default Developers;
+export default withAuthenticationRequired(Developers, {
+  onRedirecting: () => <Loading />,
+});

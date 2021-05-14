@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Heading } from '@chakra-ui/react';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 import ProfileForm from './ProfileForm';
+import Loading from '../Loading';
 
 const Profile = () => (
   <>
@@ -10,4 +12,6 @@ const Profile = () => (
   </>
 );
 
-export default Profile;
+export default withAuthenticationRequired(Profile, {
+  onRedirecting: () => <Loading />,
+});
