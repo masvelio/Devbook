@@ -34,7 +34,7 @@ import { Country } from '../../types';
 type PersonalInfoFormValues = {
   firstName: string;
   lastName: string;
-  shortBio: string;
+  bio: string;
   country: Country;
   photoUrl: string;
 };
@@ -85,7 +85,7 @@ const PersonalInfoForm = () => {
                     Last Name is required
                   </Alert>
                 </Collapse>
-                <Collapse in={errors.shortBio} animateOpacity>
+                <Collapse in={errors.bio} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     Short Bio is required
@@ -174,7 +174,7 @@ const PersonalInfoForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="shortBio"
+                      htmlFor="bio"
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       Short Bio
@@ -184,13 +184,13 @@ const PersonalInfoForm = () => {
                       mt={1}
                       rows={6}
                       shadow="sm"
-                      id="shortBio"
+                      id="bio"
                       focusBorderColor="blue.400"
                       fontSize={{ sm: 'sm' }}
-                      {...register('shortBio', {
+                      {...register('bio', {
                         required: true,
                       })}
-                      isInvalid={errors.shortBio}
+                      isInvalid={errors.bio}
                     />
                   </FormControl>
 
