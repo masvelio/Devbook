@@ -28,15 +28,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import countries from '../../utils/constants/countries';
 import countryToFlag from '../../utils/countryToFlag';
-import { Country } from '../../types';
-
-type PersonalInfoFormValues = {
-  firstName: string;
-  lastName: string;
-  bio: string;
-  country: Country;
-  photoUrl: string;
-};
+import { PersonalInfoFormValues } from '../../types';
+import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 
 const PersonalInfoForm = () => {
   const {
@@ -45,8 +38,11 @@ const PersonalInfoForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit: SubmitHandler<PersonalInfoFormValues> = (data) =>
-    console.log(data);
+  const { saveFormPartially } = useDeveloperProfileForm();
+
+  const onSubmit: SubmitHandler<PersonalInfoFormValues> = (data) => {
+    saveFormPartially(data);
+  };
 
   return (
     <>
@@ -215,7 +211,7 @@ const PersonalInfoForm = () => {
                       isInvalid={errors.country}
                     >
                       {countries.map((country) => (
-                        <option key={country.code}>
+                        <option key={country.code} value={country.code}>
                           {countryToFlag(country.code)} {country.label}
                         </option>
                       ))}
@@ -287,20 +283,12 @@ const PersonalInfoForm = () => {
                   _focus={{ shadow: '' }}
                   fontWeight="md"
                 >
-                  Save
+                  Continue
                 </Button>
               </Box>
             </chakra.form>
           </GridItem>
         </SimpleGrid>
-      </Box>
-      <Box visibility={{ base: 'hidden', sm: 'visible' }} aria-hidden="true">
-        <Box py={5}>
-          <Box
-            borderTop="solid 1px"
-            borderTopColor={useColorModeValue('gray.200', 'whiteAlpha.200')}
-          />
-        </Box>
       </Box>
     </>
   );

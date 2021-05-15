@@ -23,3 +23,23 @@ export interface Developer {
   linkedInUrl?: string;
   githubUrl?: string;
 }
+
+export type PersonalInfoFormValues = {
+  firstName: string;
+  lastName: string;
+  bio: string;
+  country: Country;
+  photoUrl: string;
+};
+
+export type WorkExperienceFormValues = {
+  jobPosition: string;
+  yearsOfExp: string;
+  superPowers: Array<string>;
+  technologies: Array<string>;
+};
+
+export type SocialMediaFormValues = {
+  githubUrl: string;
+  linkedInUrl: string;
+};

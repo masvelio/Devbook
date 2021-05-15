@@ -4,18 +4,14 @@ import {
   Flex,
   Stack,
   Heading,
-  FormControl,
-  FormLabel,
-  Input,
   Button,
   Box,
   useColorModeValue,
 } from '@chakra-ui/react';
-// import { useAuth } from '../context/authContext';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const Login = () => {
-  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <Flex minH="100vh" align="center" justify="center">
@@ -30,14 +26,6 @@ const Login = () => {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
             <Stack spacing={10}>
               <Button
                 bg="blue.400"

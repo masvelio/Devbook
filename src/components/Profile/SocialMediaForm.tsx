@@ -22,10 +22,8 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
-type SocialMediaFormValues = {
-  githubUrl: string;
-  linkedInUrl: string;
-};
+import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
+import { SocialMediaFormValues } from '../../types';
 
 const SocialMediaForm = () => {
   const {
@@ -39,8 +37,11 @@ const SocialMediaForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<SocialMediaFormValues> = (data) =>
-    console.log(data);
+  const { saveFormPartially } = useDeveloperProfileForm();
+
+  const onSubmit: SubmitHandler<SocialMediaFormValues> = (data) => {
+    saveFormPartially(data);
+  };
 
   return (
     <>
@@ -180,7 +181,7 @@ const SocialMediaForm = () => {
                   _focus={{ shadow: '' }}
                   fontWeight="md"
                 >
-                  Save
+                  Save & Publish
                 </Button>
               </Box>
             </chakra.form>

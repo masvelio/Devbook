@@ -1,7 +1,9 @@
 import developers from '../constants/developers';
 import { Developer } from '../../types';
 
-const useDeveloperDetails = (id: Developer['id']) => {
+const useDeveloperDetails = (
+  id: Developer['id']
+): { developer: Developer | null } => {
   const developer = developers.find((dev) => dev.id === id);
 
   if (!developer) {

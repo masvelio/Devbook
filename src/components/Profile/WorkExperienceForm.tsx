@@ -21,13 +21,8 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
 import MultiSelect from '../Multiselect';
 import technologies from '../../utils/constants/technologies';
-
-type WorkExperienceFormValues = {
-  jobPosition: string;
-  yearsOfExp: string;
-  superPowers: Array<string>;
-  technologies: Array<string>;
-};
+import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
+import { WorkExperienceFormValues } from '../../types';
 
 const WorkExperienceForm = () => {
   const {
@@ -36,9 +31,10 @@ const WorkExperienceForm = () => {
     formState: { errors },
     control,
   } = useForm();
+  const { saveFormPartially } = useDeveloperProfileForm();
 
   const onSubmit: SubmitHandler<WorkExperienceFormValues> = (data) => {
-    console.log('data', data);
+    saveFormPartially(data);
   };
 
   return (
@@ -255,20 +251,12 @@ const WorkExperienceForm = () => {
                   _focus={{ shadow: '' }}
                   fontWeight="md"
                 >
-                  Save
+                  Continue
                 </Button>
               </Box>
             </chakra.form>
           </GridItem>
         </SimpleGrid>
-      </Box>
-      <Box visibility={{ base: 'hidden', sm: 'visible' }} aria-hidden="true">
-        <Box py={5}>
-          <Box
-            borderTop="solid 1px"
-            borderTopColor={useColorModeValue('gray.200', 'whiteAlpha.200')}
-          />
-        </Box>
       </Box>
     </>
   );

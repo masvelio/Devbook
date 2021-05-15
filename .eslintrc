@@ -75,6 +75,7 @@
       "error",
       {
         "arrays": "only-multiline",
+        "enums": "only-multiline",
         "objects": "only-multiline",
         "imports": "only-multiline",
         "exports": "only-multiline",
