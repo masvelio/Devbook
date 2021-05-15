@@ -16,14 +16,7 @@
     "object-curly-spacing": ["warn", "always"],
     "spaced-comment": "off",
     "no-unused-vars": [
-      "warn",
-      {
-        "vars": "all",
-        "args": "none"
-      }
-    ],
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
+      "error",
       {
         "vars": "all",
         "args": "none"

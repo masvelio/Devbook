@@ -123,9 +123,7 @@ const SocialMediaForm = () => {
                         placeholder="https://github.com/your_profile"
                         focusBorderColor="blue.400"
                         rounded="md"
-                        {...register('githubUrl', {
-                          required: 'Github URL is required',
-                        })}
+                        {...register('githubUrl')}
                         isInvalid={!!errors.githubUrl}
                       />
                     </InputGroup>
@@ -160,9 +158,7 @@ const SocialMediaForm = () => {
                         placeholder="https://www.linkedin.com/in/your_profile/"
                         focusBorderColor="blue.400"
                         rounded="md"
-                        {...register('linkedInUrl', {
-                          required: 'LinkedIn URL is required',
-                        })}
+                        {...register('linkedInUrl')}
                         isInvalid={!!errors.linkedInUrl}
                       />
                     </InputGroup>
@@ -181,7 +177,7 @@ const SocialMediaForm = () => {
                   _focus={{ shadow: '' }}
                   fontWeight="md"
                 >
-                  Save & Publish
+                  Continue
                 </Button>
               </Box>
             </chakra.form>

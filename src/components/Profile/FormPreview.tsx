@@ -3,7 +3,6 @@ import { useDeveloperProfileForm } from '../../context/developerProfileFormConte
 
 const FormPreview = () => {
   const { state } = useDeveloperProfileForm();
-  console.log('state!', state);
   return (
     <>
       <h1>form preview</h1>
