@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import * as React from 'react';
 import {
   Alert,
@@ -20,7 +21,7 @@ import {
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
 import MultiSelect from '../Multiselect';
-import technologies from '../../utils/constants/technologies';
+import technologiesList from '../../utils/constants/technologies';
 import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 import { WorkExperienceFormValues } from '../../types';
 
@@ -30,14 +31,32 @@ const TECHNOLOGIES = 'technologies';
 
 const WorkExperienceForm = () => {
   const {
+    state: {
+      formData: {
+        super_powers,
+        technologies,
+        job_position,
+        years_of_experience,
+      },
+    },
+    saveFormPartially,
+  } = useDeveloperProfileForm();
+
+  const {
     register,
     handleSubmit,
     formState: { errors },
     control,
     getValues,
     setValue,
-  } = useForm();
-  const { saveFormPartially } = useDeveloperProfileForm();
+  } = useForm({
+    defaultValues: {
+      technologies,
+      superPowers: super_powers,
+      jobPosition: job_position,
+      yearsOfExp: years_of_experience,
+    },
+  });
 
   const onSubmit: SubmitHandler<WorkExperienceFormValues> = (data) => {
     saveFormPartially(data);
@@ -53,7 +72,7 @@ const WorkExperienceForm = () => {
 
   const options = React.useMemo(
     () =>
-      technologies.map((technology) => ({
+      technologiesList.map((technology) => ({
         label: technology,
         value: technology,
       })),
@@ -211,7 +230,7 @@ const WorkExperienceForm = () => {
                       control={control}
                       defaultValue={[]}
                       rules={{ required: true }}
-                      render={({ field }) => (
+                      render={({ field: { ref, ...restFields } }) => (
                         <MultiSelect
                           isMulti
                           options={options}
@@ -219,7 +238,7 @@ const WorkExperienceForm = () => {
                           placeholder="Select Super Powers"
                           isInvalid={isSuperPowersFieldInvalid}
                           {...(isSuperPowersFieldInvalid && additionalStyles)}
-                          {...field}
+                          {...restFields}
                           value={getFieldValue(SUPER_POWERS)}
                           onChange={(arr: Array<ReactSelectOption>) =>
                             handleArrayChange(arr, SUPER_POWERS)
@@ -248,7 +267,7 @@ const WorkExperienceForm = () => {
                       control={control}
                       defaultValue={[]}
                       rules={{ required: true }}
-                      render={({ field }) => (
+                      render={({ field: { ref, ...restFields } }) => (
                         <MultiSelect
                           isMulti
                           options={options}
@@ -256,7 +275,7 @@ const WorkExperienceForm = () => {
                           placeholder="Select Technologies"
                           isInvalid={isTechnologiesFieldInvalid}
                           {...(isTechnologiesFieldInvalid && additionalStyles)}
-                          {...field}
+                          {...restFields}
                           value={getFieldValue(TECHNOLOGIES)}
                           onChange={(arr: Array<ReactSelectOption>) =>
                             handleArrayChange(arr, TECHNOLOGIES)

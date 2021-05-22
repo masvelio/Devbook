@@ -36,7 +36,7 @@ const chakraStyles = {
   valueContainer: (provided) => ({
     ...provided,
     padding: '0.125rem 1rem',
-    fontSize: '14px'
+    fontSize: '14px',
   }),
   control: () => {},
   menuList: () => ({}),

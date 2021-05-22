@@ -8,8 +8,7 @@ import SocialMediaForm from './SocialMediaForm';
 import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 import FormPreview from './FormPreview';
 
-const ProfileForm = () => {
-
+const ProfileForm = ({ profileData = {} }) => {
   const { state, handleTabsChange } = useDeveloperProfileForm();
   const { currentTabIndex } = state;
 

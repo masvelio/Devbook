@@ -8,7 +8,7 @@ import config from './auth_config.json';
 import App from './App';
 
 const onRedirectCallback = () => {
-  window.location.assign('http://localhost:3000/developers');
+  window.location.assign('http://localhost:3000');
 };
 
 const providerConfig = {

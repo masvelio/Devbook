@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import * as React from 'react';
 import {
   Alert,
@@ -27,17 +28,22 @@ import { SocialMediaFormValues } from '../../types';
 
 const SocialMediaForm = () => {
   const {
+    state: {
+      formData: { github_url, linked_in_url },
+    },
+    saveFormPartially,
+  } = useDeveloperProfileForm();
+
+  const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      githubUrl: '',
-      linkedInUrl: '',
+      githubUrl: github_url,
+      linkedInUrl: linked_in_url,
     },
   });
-
-  const { saveFormPartially } = useDeveloperProfileForm();
 
   const onSubmit: SubmitHandler<SocialMediaFormValues> = (data) => {
     saveFormPartially(data);

@@ -22,7 +22,10 @@ type Action =
     };
 type Dispatch = (action: Action) => void;
 type State = { formData: {}; currentTabIndex: number };
-type DeveloperProfileFormProviderProps = { children: React.ReactNode };
+type DeveloperProfileFormProviderProps = {
+  children: React.ReactNode;
+  formData: {};
+};
 
 const DeveloperProfileFormContext =
   React.createContext<
@@ -66,9 +69,10 @@ const developerProfileFormReducer = (state: State, action: Action) => {
 
 const DeveloperProfileFormProvider = ({
   children,
+  formData,
 }: DeveloperProfileFormProviderProps) => {
   const [state, dispatch] = React.useReducer(developerProfileFormReducer, {
-    formData: {},
+    formData,
     currentTabIndex: 0,
   });
 

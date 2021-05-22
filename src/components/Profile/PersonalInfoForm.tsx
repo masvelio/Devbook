@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+import * as React from 'react';
 import {
-  Avatar,
   Box,
   Button,
   chakra,
@@ -8,7 +9,6 @@ import {
   FormLabel,
   GridItem,
   Heading,
-  Icon,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -20,10 +20,9 @@ import {
   Alert,
   AlertIcon,
   Collapse,
+  Image,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { FaUser } from 'react-icons/fa';
-import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import countries from '../../utils/constants/countries';
@@ -33,10 +32,25 @@ import { useDeveloperProfileForm } from '../../context/developerProfileFormConte
 
 const PersonalInfoForm = () => {
   const {
+    state: {
+      formData: { first_name, last_name, bio, country_code, image_url },
+    },
+  } = useDeveloperProfileForm();
+
+  const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    getValues,
+  } = useForm({
+    defaultValues: {
+      firstName: first_name,
+      lastName: last_name,
+      bio,
+      country: country_code,
+      photoUrl: image_url,
+    },
+  });
 
   const { saveFormPartially } = useDeveloperProfileForm();
 
@@ -232,28 +246,22 @@ const PersonalInfoForm = () => {
                       alignItems="center"
                       mt={1}
                     >
-                      <Avatar
+                      <Image
                         mr="6"
-                        mb={[4, 0]}
-                        boxSize={16}
-                        bg={useColorModeValue('gray.100', 'gray.800')}
-                        icon={
-                          <Icon
-                            as={FaUser}
-                            boxSize={10}
-                            mt={1}
-                            rounded="full"
-                            color={useColorModeValue('gray.300', 'gray.700')}
-                          />
-                        }
+                        fallbackSrc="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+                        borderRadius="full"
+                        boxSize="64px"
+                        src={getValues().photoUrl}
+                        alt="Developer Profile"
                       />
+
                       <InputGroup size="sm">
                         <InputLeftAddon
                           bg={useColorModeValue('gray.50', 'gray.800')}
                           color={useColorModeValue('gray.500', 'gay.50')}
                           rounded="md"
                         >
-                          https://
+                          URL
                         </InputLeftAddon>
                         <Input
                           type="text"
