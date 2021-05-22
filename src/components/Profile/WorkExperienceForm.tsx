@@ -24,17 +24,61 @@ import technologies from '../../utils/constants/technologies';
 import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 import { WorkExperienceFormValues } from '../../types';
 
+type ReactSelectOption = { value: string; label: string };
+const SUPER_POWERS = 'superPowers';
+const TECHNOLOGIES = 'technologies';
+
 const WorkExperienceForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
+    getValues,
+    setValue,
   } = useForm();
   const { saveFormPartially } = useDeveloperProfileForm();
 
   const onSubmit: SubmitHandler<WorkExperienceFormValues> = (data) => {
     saveFormPartially(data);
+  };
+
+  const handleArrayChange = (
+    array: Array<ReactSelectOption>,
+    formFieldName: string
+  ) => {
+    const value = array.map((el) => el.value);
+    setValue(formFieldName, value, { shouldValidate: true });
+  };
+
+  const options = React.useMemo(
+    () =>
+      technologies.map((technology) => ({
+        label: technology,
+        value: technology,
+      })),
+    []
+  );
+
+  const getFieldValue = (
+    fieldName: typeof TECHNOLOGIES | typeof SUPER_POWERS
+  ) =>
+    getValues(fieldName)?.map((str: string) => ({
+      value: str,
+      label: str,
+    }));
+
+  const isTechnologiesFieldInvalid = !!errors.technologies;
+  const isSuperPowersFieldInvalid = !!errors.superPowers;
+
+  const additionalStyles = {
+    // makes border of the input red on error
+    styles: {
+      valueContainer: (provided: {}) => ({
+        ...provided,
+        border: '2px solid #E53E3E',
+      }),
+    },
   };
 
   return (
@@ -156,36 +200,30 @@ const WorkExperienceForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="superPowers"
+                      htmlFor={SUPER_POWERS}
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       Super Powers
                     </FormLabel>
 
                     <Controller
-                      name="superPowers"
+                      name={SUPER_POWERS}
                       control={control}
-                      defaultValue={false}
+                      defaultValue={[]}
                       rules={{ required: true }}
                       render={({ field }) => (
                         <MultiSelect
-                          id="superPowers"
-                          placeholder="Select Super Powers"
                           isMulti
-                          isInvalid={!!errors.superPowers}
-                          options={technologies.map((technology) => ({
-                            label: technology,
-                            value: technology,
-                          }))}
-                          {...(!!errors.superPowers && {
-                            styles: {
-                              valueContainer: (provided: {}) => ({
-                                ...provided,
-                                border: '2px solid #E53E3E',
-                              }),
-                            },
-                          })}
+                          options={options}
+                          id={SUPER_POWERS}
+                          placeholder="Select Super Powers"
+                          isInvalid={isSuperPowersFieldInvalid}
+                          {...(isSuperPowersFieldInvalid && additionalStyles)}
                           {...field}
+                          value={getFieldValue(SUPER_POWERS)}
+                          onChange={(arr: Array<ReactSelectOption>) =>
+                            handleArrayChange(arr, SUPER_POWERS)
+                          }
                         />
                       )}
                     />
@@ -199,36 +237,30 @@ const WorkExperienceForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="technologies"
+                      htmlFor={TECHNOLOGIES}
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       Technologies
                     </FormLabel>
 
                     <Controller
-                      name="technologies"
+                      name={TECHNOLOGIES}
                       control={control}
-                      defaultValue={false}
+                      defaultValue={[]}
                       rules={{ required: true }}
                       render={({ field }) => (
                         <MultiSelect
-                          id="technologies"
-                          placeholder="Select Technologies"
                           isMulti
-                          {...(!!errors.technologies && {
-                            styles: {
-                              valueContainer: (provided: {}) => ({
-                                ...provided,
-                                border: '2px solid #E53E3E',
-                              }),
-                            },
-                          })}
-                          isInvalid={!!errors.technologies}
-                          options={technologies.map((technology) => ({
-                            label: technology,
-                            value: technology,
-                          }))}
+                          options={options}
+                          id={TECHNOLOGIES}
+                          placeholder="Select Technologies"
+                          isInvalid={isTechnologiesFieldInvalid}
+                          {...(isTechnologiesFieldInvalid && additionalStyles)}
                           {...field}
+                          value={getFieldValue(TECHNOLOGIES)}
+                          onChange={(arr: Array<ReactSelectOption>) =>
+                            handleArrayChange(arr, TECHNOLOGIES)
+                          }
                         />
                       )}
                     />
