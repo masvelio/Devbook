@@ -187,7 +187,12 @@ const DeveloperDetails = () => {
                 isExternal
                 _hover={{ textUnderline: 'none' }}
               >
-                <Button size="sm" colorScheme="gray" leftIcon={<FaGithub />}>
+                <Button
+                  size="sm"
+                  colorScheme="gray"
+                  leftIcon={<FaGithub />}
+                  disabled={!github_url}
+                >
                   Github
                 </Button>
               </Link>
@@ -202,6 +207,7 @@ const DeveloperDetails = () => {
                   colorScheme="linkedin"
                   boxShadow="0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
                   leftIcon={<FaLinkedin />}
+                  disabled={!linked_in_url}
                 >
                   LinkedIn
                 </Button>

@@ -42,10 +42,8 @@ export const CreateProfile = gql`
       }
       on_conflict: { constraint: developers_user_id_key }
     ) {
-      affected_rows
       returning {
         id
-        first_name
       }
     }
   }
@@ -54,7 +52,9 @@ export const CreateProfile = gql`
 const FormPreview = () => {
   const { state } = useDeveloperProfileForm();
   const { user } = useAuth0();
-
+  const { isFormCompleted, formData } = state;
+  console.log('is', isFormCompleted);
+  console.log('formData', formData);
   const buttonLabel = state.formData?.id ? 'Update profile' : 'Create Profile';
   const [createProfile, { loading: createProfileLoading }] =
     useMutation(CreateProfile);
@@ -106,7 +106,7 @@ const FormPreview = () => {
           colorScheme="teal"
           spinnerPlacement="end"
           onClick={saveProfile}
-          // disabled={}
+          disabled={!isFormCompleted}
         >
           {buttonLabel}
         </Button>

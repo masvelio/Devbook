@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import { Developers } from '../generated/graphql';
 import {
@@ -9,6 +10,7 @@ import {
 enum ActionType {
   SAVE_FORM = 'SAVE_FORM',
   CHANGE_TAB = 'CHANGE_TAB',
+  CALCULATE_IF_FORM_COMPLETED = 'CALCULATE_IF_FORM_COMPLETED',
 }
 
 type Action =
@@ -19,10 +21,14 @@ type Action =
   | {
       type: ActionType.CHANGE_TAB;
       newTabIndex?: number;
+    }
+  | {
+      type: ActionType.CALCULATE_IF_FORM_COMPLETED;
     };
 type Dispatch = (action: Action) => void;
 type State = {
   formData: Partial<Developers> | undefined;
+  isFormCompleted: boolean;
   currentTabIndex: number;
 };
 
@@ -56,6 +62,43 @@ const developerProfileFormReducer = (state: State, action: Action) => {
         formData: { ...state.formData, ...action.developerProfileData },
       };
     }
+    case ActionType.CALCULATE_IF_FORM_COMPLETED: {
+      if (state.formData?.id) {
+        return {
+          ...state,
+          isFormCompleted: true,
+        };
+      }
+
+      const {
+        first_name,
+        last_name,
+        bio,
+        country_code,
+        image_url,
+        job_position,
+        years_of_experience,
+        super_powers,
+        technologies,
+      } = state.formData as Developers;
+
+      const areRequiredFieldsFilledOut = [
+        first_name,
+        last_name,
+        bio,
+        country_code,
+        image_url,
+        job_position,
+        years_of_experience,
+        super_powers,
+        technologies,
+      ].every(Boolean);
+
+      return {
+        ...state,
+        isFormCompleted: areRequiredFieldsFilledOut,
+      };
+    }
     case ActionType.CHANGE_TAB: {
       return {
         ...state,
@@ -78,11 +121,13 @@ const DeveloperProfileFormProvider = ({
 }: DeveloperProfileFormProviderProps) => {
   const [state, dispatch] = React.useReducer(developerProfileFormReducer, {
     formData,
+    isFormCompleted: !!formData?.id,
     currentTabIndex: 0,
   });
 
   const saveFormPartially = React.useCallback((developerProfileData) => {
     dispatch({ type: ActionType.SAVE_FORM, developerProfileData });
+    dispatch({ type: ActionType.CALCULATE_IF_FORM_COMPLETED });
     dispatch({ type: ActionType.CHANGE_TAB });
   }, []);
 
