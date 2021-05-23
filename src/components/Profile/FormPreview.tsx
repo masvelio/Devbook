@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { Button, Center, Box } from '@chakra-ui/react';
+import { Button, Center, Box, useToast } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 import DeveloperCard from '../Developers/DeveloperCard';
-import { Developers } from '../../generated/graphql';
+import {
+  Developers,
+  GetDevelopersProfileDocument,
+} from '../../generated/graphql';
+import GetSingleDevelopersProfile from '../../utils/queries/GetSingleDevelopersProfile';
 
 export const CreateProfile = gql`
   mutation CreateProfile(
@@ -44,20 +48,47 @@ export const CreateProfile = gql`
     ) {
       returning {
         id
+        bio
+        country_code
+        first_name
+        github_url
+        image_url
+        job_position
+        last_name
+        linked_in_url
+        rating
+        super_powers
+        technologies
+        user_id
+        years_of_experience
       }
     }
   }
 `;
 
 const FormPreview = () => {
-  const { state } = useDeveloperProfileForm();
+  const { state, saveFormPartially } = useDeveloperProfileForm();
   const { user } = useAuth0();
-  const { isFormCompleted, formData } = state;
-  console.log('is', isFormCompleted);
-  console.log('formData', formData);
+  const { isFormCompleted } = state;
   const buttonLabel = state.formData?.id ? 'Update profile' : 'Create Profile';
-  const [createProfile, { loading: createProfileLoading }] =
-    useMutation(CreateProfile);
+  const toast = useToast();
+
+  const [createProfile, { loading: createProfileLoading }] = useMutation(
+    CreateProfile,
+    {
+      onCompleted: (developerData) => {
+        toast({
+          title: 'Profile created.',
+          description: 'Added to the developers list.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+        const developerProfile = developerData.insert_developers.returning[0];
+        saveFormPartially(developerProfile);
+      },
+    }
+  );
 
   const saveProfile = async () => {
     const {
@@ -90,6 +121,10 @@ const FormPreview = () => {
         user_id: user?.sub,
         years_of_experience,
       },
+      refetchQueries: [
+        { query: GetDevelopersProfileDocument },
+        { query: GetSingleDevelopersProfile, variables: { userId: user?.sub } },
+      ],
     });
   };
 

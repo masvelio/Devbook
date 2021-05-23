@@ -100,6 +100,10 @@ const developerProfileFormReducer = (state: State, action: Action) => {
       };
     }
     case ActionType.CHANGE_TAB: {
+      if (!action.newTabIndex && state.currentTabIndex === 3) {
+        return state;
+      }
+
       return {
         ...state,
         currentTabIndex:
@@ -135,9 +139,19 @@ const DeveloperProfileFormProvider = ({
     dispatch({ type: ActionType.CHANGE_TAB, newTabIndex });
   }, []);
 
+  const calculateFormCompleted = React.useCallback((newTabIndex) => {
+    dispatch({ type: ActionType.CALCULATE_IF_FORM_COMPLETED });
+  }, []);
+
   const value = React.useMemo(
-    () => ({ state, dispatch, saveFormPartially, handleTabsChange }),
-    [handleTabsChange, saveFormPartially, state]
+    () => ({
+      state,
+      dispatch,
+      saveFormPartially,
+      handleTabsChange,
+      calculateFormCompleted,
+    }),
+    [handleTabsChange, saveFormPartially, calculateFormCompleted, state]
   );
 
   return (
