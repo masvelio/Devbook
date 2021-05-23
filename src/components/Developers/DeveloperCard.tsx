@@ -1,4 +1,5 @@
-import * as React from 'react';
+/* eslint-disable @typescript-eslint/naming-convention */
+import React from 'react';
 import {
   Heading,
   Avatar,
@@ -15,10 +16,13 @@ import {
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link as RouteLink } from 'react-router-dom';
 
-import { Developer } from '../../types';
-import countryToFlag from '../../utils/countryToFlag';
+import {
+  countryCodeToLabel,
+  countryCodeToFlag,
+} from '../../utils/countryUtils';
 import Rating from '../Rating';
 import defaultTechnologies from '../../utils/constants/technologies';
+import { Developers } from '../../generated/graphql';
 
 const TechnologiesBadges = ({
   shouldDisplayPlaceholderTechnologies,
@@ -46,23 +50,25 @@ const DeveloperCard = ({
   developer,
   isPreview = false,
 }: {
-  developer: Developer;
+  developer?: Partial<Developers>;
   isPreview?: boolean;
 }) => {
   const {
-    imageUrl,
-    firstName,
-    lastName,
-    jobPosition,
-    country,
-    rating,
+    image_url,
+    first_name,
+    last_name,
+    job_position,
+    country_code,
+    github_url,
+    linked_in_url,
     technologies,
-    githubUrl,
-    linkedInUrl,
     id,
-  } = developer;
+  } = developer || { ...{} };
 
-  const isNameAvailable = firstName && lastName;
+  // TODO make this dynamic
+  const rating = 4;
+
+  const isNameAvailable = first_name && last_name;
   const shouldDisplayPlaceholderTechnologies =
     isPreview && (!technologies || technologies?.length === 0);
 
@@ -78,19 +84,19 @@ const DeveloperCard = ({
         textAlign="center"
         alignContent="center"
       >
-        <Avatar size="xl" src={imageUrl} alt="Avatar Alt" mb={4} />
+        <Avatar size="xl" src={image_url} alt="Avatar Alt" mb={4} />
         <Heading
           fontSize="2xl"
           color={isNameAvailable ? 'gray.500' : 'gray.200'}
           fontFamily="body"
         >
-          {isNameAvailable ? `${firstName} ${lastName}` : 'Adam Smith'}
+          {isNameAvailable ? `${first_name} ${last_name}` : 'Adam Smith'}
         </Heading>
         <Text fontWeight={600} color="gray.500">
-          {jobPosition || 'Job Position'}
+          {job_position || 'Job Position'}
         </Text>
         <Text fontWeight={400} color="gray.500" mb={4}>
-          {countryToFlag(country?.code)} {country?.label}
+          {countryCodeToFlag(country_code)} {countryCodeToLabel(country_code)}
         </Text>
         <Center>
           <Rating rating={rating} />
@@ -114,19 +120,23 @@ const DeveloperCard = ({
         </Stack>
 
         <HStack justify="center" mt={4}>
-          <Link href={githubUrl} isExternal _hover={{ textUnderline: 'none' }}>
+          <Link
+            href={github_url || ''}
+            isExternal
+            _hover={{ textUnderline: 'none' }}
+          >
             <Button
               size="sm"
               colorScheme="gray"
               leftIcon={<FaGithub />}
-              disabled={!githubUrl}
+              disabled={!github_url}
             >
               Github
             </Button>
           </Link>
 
           <Link
-            href={linkedInUrl}
+            href={linked_in_url || ''}
             isExternal
             _hover={{ textUnderline: 'none' }}
           >
@@ -135,7 +145,7 @@ const DeveloperCard = ({
               colorScheme="linkedin"
               boxShadow="0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
               leftIcon={<FaLinkedin />}
-              disabled={!linkedInUrl}
+              disabled={!linked_in_url}
             >
               LinkedIn
             </Button>

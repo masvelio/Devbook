@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import * as React from 'react';
+import React from 'react';
 import {
   Box,
   Button,
@@ -26,14 +26,16 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import countries from '../../utils/constants/countries';
-import countryToFlag from '../../utils/countryToFlag';
+import { countryCodeToFlag } from '../../utils/countryUtils';
 import { PersonalInfoFormValues } from '../../types';
 import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 
 const PersonalInfoForm = () => {
   const {
     state: {
-      formData: { first_name, last_name, bio, country_code, image_url },
+      formData: { first_name, last_name, bio, country_code, image_url } = {
+        ...{},
+      },
     },
   } = useDeveloperProfileForm();
 
@@ -44,11 +46,11 @@ const PersonalInfoForm = () => {
     getValues,
   } = useForm({
     defaultValues: {
-      firstName: first_name,
-      lastName: last_name,
+      first_name,
+      last_name,
       bio,
-      country: country_code,
-      photoUrl: image_url,
+      country_code,
+      image_url,
     },
   });
 
@@ -80,31 +82,31 @@ const PersonalInfoForm = () => {
                 about yourself.
               </Text>
               <Stack mt={4} spacing={3} fontSize="sm">
-                <Collapse in={errors.firstName} animateOpacity>
+                <Collapse in={!!errors.first_name} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     First Name is required
                   </Alert>
                 </Collapse>
-                <Collapse in={errors.lastName} animateOpacity>
+                <Collapse in={!!errors.last_name} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     Last Name is required
                   </Alert>
                 </Collapse>
-                <Collapse in={errors.bio} animateOpacity>
+                <Collapse in={!!errors.bio} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     Short Bio is required
                   </Alert>
                 </Collapse>
-                <Collapse in={errors.country} animateOpacity>
+                <Collapse in={!!errors.country_code} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     Country is required
                   </Alert>
                 </Collapse>
-                <Collapse in={errors.photoUrl} animateOpacity>
+                <Collapse in={!!errors.image_url} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     Photo URL is required
@@ -131,24 +133,24 @@ const PersonalInfoForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="firstName"
+                      htmlFor="first_name"
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       First name
                     </FormLabel>
                     <Input
                       type="text"
-                      id="firstName"
+                      id="first_name"
                       mt={1}
                       focusBorderColor="blue.400"
                       shadow="sm"
                       size="sm"
                       w="full"
                       rounded="md"
-                      {...register('firstName', {
+                      {...register('first_name', {
                         required: true,
                       })}
-                      isInvalid={!!errors.firstName}
+                      isInvalid={!!errors.first_name}
                     />
                   </FormControl>
 
@@ -156,22 +158,22 @@ const PersonalInfoForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="lastName"
+                      htmlFor="last_name"
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       Last name
                     </FormLabel>
                     <Input
                       type="text"
-                      id="lastName"
+                      id="last_name"
                       mt={1}
                       focusBorderColor="blue.400"
                       shadow="sm"
                       size="sm"
                       w="full"
                       rounded="md"
-                      isInvalid={errors.lastName}
-                      {...register('lastName', {
+                      isInvalid={!!errors.last_name}
+                      {...register('last_name', {
                         required: true,
                       })}
                     />
@@ -197,13 +199,13 @@ const PersonalInfoForm = () => {
                       {...register('bio', {
                         required: true,
                       })}
-                      isInvalid={errors.bio}
+                      isInvalid={!!errors.bio}
                     />
                   </FormControl>
 
                   <FormControl as={GridItem} colSpan={[6, 3]}>
                     <FormLabel
-                      htmlFor="country"
+                      htmlFor="country_code"
                       fontSize="sm"
                       fontWeight="md"
                       color={useColorModeValue('gray.700', 'gray.50')}
@@ -211,7 +213,7 @@ const PersonalInfoForm = () => {
                       Country
                     </FormLabel>
                     <Select
-                      id="country"
+                      id="country_code"
                       placeholder="Select option"
                       mt={1}
                       focusBorderColor="blue.400"
@@ -219,14 +221,14 @@ const PersonalInfoForm = () => {
                       size="sm"
                       w="full"
                       rounded="md"
-                      {...register('country', {
+                      {...register('country_code', {
                         required: true,
                       })}
-                      isInvalid={errors.country}
+                      isInvalid={!!errors.country_code}
                     >
                       {countries.map((country) => (
                         <option key={country.code} value={country.code}>
-                          {countryToFlag(country.code)} {country.label}
+                          {countryCodeToFlag(country.code)} {country.label}
                         </option>
                       ))}
                     </Select>
@@ -236,7 +238,7 @@ const PersonalInfoForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="photoUrl"
+                      htmlFor="image_url"
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       Photo
@@ -251,7 +253,7 @@ const PersonalInfoForm = () => {
                         fallbackSrc="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
                         borderRadius="full"
                         boxSize="64px"
-                        src={getValues().photoUrl}
+                        src={getValues().image_url}
                         alt="Developer Profile"
                       />
 
@@ -266,13 +268,13 @@ const PersonalInfoForm = () => {
                         <Input
                           type="text"
                           placeholder="www.example.com"
-                          id="photoUrl"
+                          id="image_url"
                           focusBorderColor="blue.400"
                           rounded="md"
-                          {...register('photoUrl', {
+                          {...register('image_url', {
                             required: true,
                           })}
-                          isInvalid={errors.photoUrl}
+                          isInvalid={!!errors.image_url}
                         />
                       </InputGroup>
                     </Flex>

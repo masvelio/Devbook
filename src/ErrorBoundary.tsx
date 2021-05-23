@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface IErrorBoundaryProps {
   children: ReactNode;
@@ -23,6 +22,7 @@ export class ErrorBoundary extends Component<
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // eslint-disable-next-line no-console
     console.error('Uncaught error: ', error, errorInfo);
   }
 
@@ -37,11 +37,8 @@ export class ErrorBoundary extends Component<
     if (hasError) {
       return (
         <>
-          <h1>Woops 🙈</h1>
-          <p>
-            Something went wrong on our end, the below button is not AZ-5, what
-            could go wrong...
-          </p>
+          <h1>Error</h1>
+          <p>Something went wrong on our end.</p>
           <button type="submit" onClick={this.handleRefreshClick}>
             Refresh
           </button>

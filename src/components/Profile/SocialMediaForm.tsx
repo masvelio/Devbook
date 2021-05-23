@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import * as React from 'react';
+import React from 'react';
 import {
   Alert,
   AlertIcon,
@@ -28,9 +28,7 @@ import { SocialMediaFormValues } from '../../types';
 
 const SocialMediaForm = () => {
   const {
-    state: {
-      formData: { github_url, linked_in_url },
-    },
+    state: { formData: { github_url, linked_in_url } = { ...{} } },
     saveFormPartially,
   } = useDeveloperProfileForm();
 
@@ -40,8 +38,8 @@ const SocialMediaForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      githubUrl: github_url,
-      linkedInUrl: linked_in_url,
+      github_url,
+      linked_in_url,
     },
   });
 
@@ -71,13 +69,13 @@ const SocialMediaForm = () => {
               </Text>
 
               <Stack mt={4} spacing={3} fontSize="sm">
-                <Collapse in={!!errors.githubUrl} animateOpacity>
+                <Collapse in={!!errors.github_url} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     Github URL is required
                   </Alert>
                 </Collapse>
-                <Collapse in={!!errors.linkedInUrl} animateOpacity>
+                <Collapse in={!!errors.linked_in_url} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     LinkedIn URL is required
@@ -104,7 +102,7 @@ const SocialMediaForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="githubUrl"
+                      htmlFor="github_url"
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       Github URL
@@ -125,12 +123,12 @@ const SocialMediaForm = () => {
                       </InputLeftAddon>
                       <Input
                         type="text"
-                        id="githubUrl"
+                        id="github_url"
                         placeholder="https://github.com/your_profile"
                         focusBorderColor="blue.400"
                         rounded="md"
-                        {...register('githubUrl')}
-                        isInvalid={!!errors.githubUrl}
+                        {...register('github_url')}
+                        isInvalid={!!errors.github_url}
                       />
                     </InputGroup>
                   </FormControl>
@@ -139,7 +137,7 @@ const SocialMediaForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="linkedInUrl"
+                      htmlFor="linked_in_url"
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       LinkedIn URL
@@ -160,12 +158,12 @@ const SocialMediaForm = () => {
                       </InputLeftAddon>
                       <Input
                         type="text"
-                        id="linkedInUrl"
+                        id="linked_in_url"
                         placeholder="https://www.linkedin.com/in/your_profile/"
                         focusBorderColor="blue.400"
                         rounded="md"
-                        {...register('linkedInUrl')}
-                        isInvalid={!!errors.linkedInUrl}
+                        {...register('linked_in_url')}
+                        isInvalid={!!errors.linked_in_url}
                       />
                     </InputGroup>
                   </FormControl>

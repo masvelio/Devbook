@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Box, Link, Stack } from '@chakra-ui/react';
 import { Link as RouteLink } from 'react-router-dom';
 

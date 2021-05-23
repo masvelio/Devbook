@@ -6,7 +6,7 @@ import {
   SkeletonCircle,
   SkeletonText,
 } from '@chakra-ui/react';
-import * as React from 'react';
+import React from 'react';
 
 const DevelopersLoading = () => (
   <>

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import * as React from 'react';
+import React from 'react';
 import {
   Alert,
   AlertIcon,
@@ -26,7 +26,7 @@ import { useDeveloperProfileForm } from '../../context/developerProfileFormConte
 import { WorkExperienceFormValues } from '../../types';
 
 type ReactSelectOption = { value: string; label: string };
-const SUPER_POWERS = 'superPowers';
+const SUPER_POWERS = 'super_powers';
 const TECHNOLOGIES = 'technologies';
 
 const WorkExperienceForm = () => {
@@ -37,7 +37,7 @@ const WorkExperienceForm = () => {
         technologies,
         job_position,
         years_of_experience,
-      },
+      } = { ...{} },
     },
     saveFormPartially,
   } = useDeveloperProfileForm();
@@ -52,9 +52,9 @@ const WorkExperienceForm = () => {
   } = useForm({
     defaultValues: {
       technologies,
-      superPowers: super_powers,
-      jobPosition: job_position,
-      yearsOfExp: years_of_experience,
+      super_powers,
+      job_position,
+      years_of_experience,
     },
   });
 
@@ -88,7 +88,7 @@ const WorkExperienceForm = () => {
     }));
 
   const isTechnologiesFieldInvalid = !!errors.technologies;
-  const isSuperPowersFieldInvalid = !!errors.superPowers;
+  const isSuperPowersFieldInvalid = !!errors.super_powers;
 
   const additionalStyles = {
     // makes border of the input red on error
@@ -122,19 +122,19 @@ const WorkExperienceForm = () => {
                 experience and the technologies you specialize in.
               </Text>
               <Stack mt={4} spacing={3} fontSize="sm">
-                <Collapse in={errors.jobPosition} animateOpacity>
+                <Collapse in={!!errors.job_position} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     Job Position is required
                   </Alert>
                 </Collapse>
-                <Collapse in={errors.yearsOfExp} animateOpacity>
+                <Collapse in={!!errors.years_of_experience} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     Years of Experience is required
                   </Alert>
                 </Collapse>
-                <Collapse in={errors.superPowers} animateOpacity>
+                <Collapse in={errors.super_powers} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
                     Super Powers are required
@@ -167,24 +167,24 @@ const WorkExperienceForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="jobPosition"
+                      htmlFor="job_position"
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       Job position
                     </FormLabel>
                     <Input
                       type="text"
-                      id="jobPosition"
+                      id="job_position"
                       mt={1}
                       focusBorderColor="blue.400"
                       shadow="sm"
                       size="sm"
                       w="full"
                       rounded="md"
-                      {...register('jobPosition', {
+                      {...register('job_position', {
                         required: true,
                       })}
-                      isInvalid={!!errors.jobPosition}
+                      isInvalid={!!errors.job_position}
                     />
                   </FormControl>
 
@@ -192,7 +192,7 @@ const WorkExperienceForm = () => {
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
-                      htmlFor="yearsOfExp"
+                      htmlFor="years_of_experience"
                       color={useColorModeValue('gray.700', 'gray.50')}
                     >
                       Years Of Experience
@@ -201,17 +201,17 @@ const WorkExperienceForm = () => {
                       min={0}
                       step={0.1}
                       type="number"
-                      id="yearsOfExp"
+                      id="years_of_experience"
                       mt={1}
                       focusBorderColor="blue.400"
                       shadow="sm"
                       size="sm"
                       w="full"
                       rounded="md"
-                      {...register('yearsOfExp', {
+                      {...register('years_of_experience', {
                         required: true,
                       })}
-                      isInvalid={!!errors.yearsOfExp}
+                      isInvalid={!!errors.years_of_experience}
                     />
                   </FormControl>
 

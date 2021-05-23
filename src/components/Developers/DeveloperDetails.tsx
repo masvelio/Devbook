@@ -1,4 +1,5 @@
-import * as React from 'react';
+/* eslint-disable @typescript-eslint/naming-convention */
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import {
   chakra,
@@ -24,17 +25,42 @@ import {
 } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
+import { gql, useQuery } from '@apollo/client';
 
-import useDeveloperDetails from '../../utils/hooks/useDeveloperDetails';
-import countryToFlag from '../../utils/countryToFlag';
+import {
+  countryCodeToFlag,
+  countryCodeToLabel,
+} from '../../utils/countryUtils';
 import Rating from '../Rating';
 import Loading from '../Loading';
+import { GetMyDeveloperProfileQuery } from '../../generated/graphql';
 
 type DetailBlockProps = {
   CustomIcon: IconType;
   title: string;
   children: React.ReactNode;
 };
+
+export const GetSingleDevelopersProfile = gql`
+  query GetMyDeveloperProfile($developerId: Int) {
+    developers(where: { id: { _eq: $developerId } }) {
+      id
+      first_name
+      image_url
+      bio
+      github_url
+      country_code
+      job_position
+      last_name
+      linked_in_url
+      rating
+      super_powers
+      technologies
+      user_id
+      years_of_experience
+    }
+  }
+`;
 
 const DetailBlock = ({ CustomIcon, title, children }: DetailBlockProps) => (
   <Flex>
@@ -69,7 +95,21 @@ const DetailBlock = ({ CustomIcon, title, children }: DetailBlockProps) => (
 
 const DeveloperDetails = () => {
   const { id } = useParams();
-  const { developer } = useDeveloperDetails(Number(id));
+
+  const { loading, error, data } = useQuery<
+    GetMyDeveloperProfileQuery,
+    { developerId: string }
+  >(GetSingleDevelopersProfile, { variables: { developerId: id } });
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  const developer = data?.developers[0];
 
   if (!developer) {
     return (
@@ -81,19 +121,22 @@ const DeveloperDetails = () => {
   }
 
   const {
-    firstName,
-    lastName,
-    imageUrl,
-    jobPosition,
+    image_url,
     bio,
-    country,
-    rating,
-    yearsOfExperience,
+    first_name,
+    last_name,
+    job_position,
+    country_code,
+    github_url,
+    linked_in_url,
     technologies,
-    superPowers,
-    githubUrl,
-    linkedInUrl,
+    super_powers,
+    years_of_experience,
   } = developer;
+
+  // TODO make this dynamic
+  const rating = 4;
+
   return (
     <>
       <Box py={12} bg="white" rounded="xl">
@@ -102,8 +145,8 @@ const DeveloperDetails = () => {
             <Image
               borderRadius="full"
               boxSize="150px"
-              src={imageUrl}
-              alt={firstName}
+              src={image_url}
+              alt={first_name}
             />
           </Center>
 
@@ -114,14 +157,14 @@ const DeveloperDetails = () => {
               fontWeight="extrabold"
               color="gray.900"
             >
-              {firstName} {lastName}
+              {first_name} {last_name}
             </Text>
             <Text
               color="gray.600"
               fontWeight="semibold"
               textTransform="uppercase"
             >
-              {jobPosition}
+              {job_position}
             </Text>
 
             <Text mt={4} maxW="2xl" mx={{ lg: 'auto' }} color="gray.500">
@@ -138,7 +181,8 @@ const DeveloperDetails = () => {
               gridRowGap={{ md: 10 }}
             >
               <DetailBlock title="Country" CustomIcon={FaGlobeEurope}>
-                {countryToFlag(country.code)} {country.label}
+                {countryCodeToFlag(country_code)}{' '}
+                {countryCodeToLabel(country_code)}
               </DetailBlock>
 
               <DetailBlock title="Rating" CustomIcon={FaTrophy}>
@@ -146,11 +190,11 @@ const DeveloperDetails = () => {
               </DetailBlock>
 
               <DetailBlock title="Experience" CustomIcon={FaFileSignature}>
-                <Text>{yearsOfExperience} years of experience</Text>
+                <Text>{years_of_experience} years of experience</Text>
               </DetailBlock>
 
               <DetailBlock title="Technologies" CustomIcon={FaCode}>
-                <Text fontWeight="bold">{superPowers.join(', ')}</Text>
+                <Text fontWeight="bold">{super_powers.join(', ')}</Text>
                 <Text>{technologies.join(', ')}</Text>
               </DetailBlock>
             </Stack>
@@ -159,7 +203,7 @@ const DeveloperDetails = () => {
           <Center mt={8}>
             <HStack justify="center" mt={4}>
               <Link
-                href={githubUrl}
+                href={github_url || ''}
                 isExternal
                 _hover={{ textUnderline: 'none' }}
               >
@@ -169,7 +213,7 @@ const DeveloperDetails = () => {
               </Link>
 
               <Link
-                href={linkedInUrl}
+                href={linked_in_url || ''}
                 isExternal
                 _hover={{ textUnderline: 'none' }}
               >

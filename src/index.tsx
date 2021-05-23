@@ -1,20 +1,21 @@
-import * as React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { ChakraProvider, ColorModeScript, theme } from '@chakra-ui/react';
 
 import { ErrorBoundary } from './ErrorBoundary';
-import config from './auth_config.json';
 import App from './App';
 
 const onRedirectCallback = () => {
-  window.location.assign('http://localhost:3000');
+  window.location.assign(process.env.REACT_APP_CALLBACK_URL || '');
 };
 
 const providerConfig = {
-  domain: config.domain,
-  clientId: config.clientId,
-  ...(config.audience ? { audience: config.audience } : null),
+  domain: process.env.REACT_APP_DOMAIN || '',
+  clientId: process.env.REACT_APP_CLIENT_ID || '',
+  ...(process.env.REACT_APP_AUDIENCE
+    ? { audience: process.env.REACT_APP_AUDIENCE }
+    : null),
   redirectUri: window.location.origin,
   onRedirectCallback,
 };

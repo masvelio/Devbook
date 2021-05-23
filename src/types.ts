@@ -1,3 +1,5 @@
+import { Developers } from './generated/graphql';
+
 export interface NavItem {
   label: string;
   href: string;
@@ -8,38 +10,17 @@ export interface Country {
   label: string;
 }
 
-export interface Developer {
-  id: number;
-  firstName: string;
-  lastName: string;
-  bio: string;
-  imageUrl: string;
-  country: Country;
-  jobPosition: string;
-  yearsOfExperience: number;
-  rating: number;
-  superPowers: Array<string>;
-  technologies: Array<string>;
-  linkedInUrl?: string;
-  githubUrl?: string;
-}
+export type PersonalInfoFormValues = Pick<
+  Developers,
+  'first_name' | 'last_name' | 'bio' | 'country_code' | 'image_url'
+>;
 
-export type PersonalInfoFormValues = {
-  firstName: string;
-  lastName: string;
-  bio: string;
-  country: Country;
-  photoUrl: string;
-};
+export type WorkExperienceFormValues = Pick<
+  Developers,
+  'job_position' | 'years_of_experience' | 'super_powers' | 'technologies'
+>;
 
-export type WorkExperienceFormValues = {
-  jobPosition: string;
-  yearsOfExp: string;
-  superPowers: Array<string>;
-  technologies: Array<string>;
-};
-
-export type SocialMediaFormValues = {
-  githubUrl: string;
-  linkedInUrl: string;
-};
+export type SocialMediaFormValues = Pick<
+  Developers,
+  'github_url' | 'linked_in_url'
+>;

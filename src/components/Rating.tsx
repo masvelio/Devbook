@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
-import * as React from 'react';
+import React from 'react';
 import { Developer } from '../types';
 
 const Rating = ({ rating }: { rating: Developer['rating'] }) => (

@@ -65,6 +65,7 @@
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-wrap-multilines": "off",
     "react/destructuring-assignment": "off",
+//    "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/comma-dangle": [
       "error",
       {

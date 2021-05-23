@@ -1,30 +1,33 @@
 import faker from 'faker';
 import sampleSize from 'lodash.samplesize';
 
-import { Developer } from '../types';
 import countries from './constants/countries';
 import jobPositions from './constants/jobPositions';
 import technologies from './constants/technologies';
+import { Developers } from '../generated/graphql';
 
-const buildFakeDeveloperProfile = (): Omit<Developer, 'id' | 'bio'> => {
+const buildFakeDeveloperProfile = (): Omit<
+  Developers,
+  'user_id' | 'id' | 'bio'
+> => {
   const filteredCountries = countries.filter((c) => c.suggested);
 
   return {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    imageUrl: faker.image.avatar(),
-    country:
+    first_name: faker.name.firstName(),
+    last_name: faker.name.lastName(),
+    image_url: faker.image.avatar(),
+    country_code:
       filteredCountries[
         Math.floor(Math.random() * (filteredCountries.length - 1))
-      ],
-    jobPosition:
+      ].code,
+    job_position:
       jobPositions[Math.floor(Math.random() * (filteredCountries.length - 1))],
-    yearsOfExperience: Number((Math.random() * 10).toFixed(1)),
+    years_of_experience: Number((Math.random() * 10).toFixed(1)),
     rating: Math.floor(Math.random() * 3 + 3),
-    superPowers: sampleSize(technologies, 2),
+    super_powers: sampleSize(technologies, 2),
     technologies: sampleSize(technologies, 5),
-    linkedInUrl: 'https://www.linkedin.com/',
-    githubUrl: 'https://github.com/',
+    linked_in_url: 'https://www.linkedin.com/',
+    github_url: 'https://github.com/',
   };
 };
 

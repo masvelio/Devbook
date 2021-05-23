@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 import PersonalInfoForm from './PersonalInfoForm';
@@ -8,7 +8,7 @@ import SocialMediaForm from './SocialMediaForm';
 import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 import FormPreview from './FormPreview';
 
-const ProfileForm = ({ profileData = {} }) => {
+const ProfileForm = () => {
   const { state, handleTabsChange } = useDeveloperProfileForm();
   const { currentTabIndex } = state;
 

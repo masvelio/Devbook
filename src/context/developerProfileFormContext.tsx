@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
+import { Developers } from '../generated/graphql';
 import {
-  Developer,
   PersonalInfoFormValues,
   SocialMediaFormValues,
   WorkExperienceFormValues,
@@ -13,7 +13,7 @@ enum ActionType {
 
 type Action =
   | {
-      developerProfileData: Partial<Developer>;
+      developerProfileData: Partial<Developers>;
       type: ActionType.SAVE_FORM;
     }
   | {
@@ -21,27 +21,32 @@ type Action =
       newTabIndex?: number;
     };
 type Dispatch = (action: Action) => void;
-type State = { formData: {}; currentTabIndex: number };
-type DeveloperProfileFormProviderProps = {
-  children: React.ReactNode;
-  formData: {};
+type State = {
+  formData: Partial<Developers> | undefined;
+  currentTabIndex: number;
 };
 
+type DeveloperProfileFormProviderProps = {
+  children: React.ReactNode;
+  formData: Partial<Developers> | undefined;
+};
+
+interface DeveloperProfileFormContextInterface {
+  state: State;
+  dispatch: Dispatch;
+  saveFormPartially: (
+    data:
+      | PersonalInfoFormValues
+      | WorkExperienceFormValues
+      | SocialMediaFormValues
+  ) => void;
+  handleTabsChange: (newTabIndex?: number) => void;
+}
+
 const DeveloperProfileFormContext =
-  React.createContext<
-    | {
-        state: State;
-        dispatch: Dispatch;
-        saveFormPartially: (
-          data:
-            | PersonalInfoFormValues
-            | WorkExperienceFormValues
-            | SocialMediaFormValues
-        ) => void;
-        handleTabsChange: (newTabIndex?: number) => void;
-      }
-    | undefined
-  >(undefined);
+  React.createContext<DeveloperProfileFormContextInterface | undefined>(
+    undefined
+  );
 
 const developerProfileFormReducer = (state: State, action: Action) => {
   switch (action.type) {
@@ -97,7 +102,7 @@ const DeveloperProfileFormProvider = ({
   );
 };
 
-const useDeveloperProfileForm = () => {
+const useDeveloperProfileForm = (): DeveloperProfileFormContextInterface => {
   const context = React.useContext(DeveloperProfileFormContext);
 
   if (context === undefined) {
