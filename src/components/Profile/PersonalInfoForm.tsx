@@ -43,7 +43,7 @@ const PersonalInfoForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
+    watch,
   } = useForm({
     defaultValues: {
       first_name,
@@ -54,8 +54,8 @@ const PersonalInfoForm = () => {
     },
   });
 
+  const watchImageUrl = watch('image_url', image_url);
   const { saveFormPartially } = useDeveloperProfileForm();
-
   const onSubmit: SubmitHandler<PersonalInfoFormValues> = (data) => {
     saveFormPartially(data);
   };
@@ -253,7 +253,7 @@ const PersonalInfoForm = () => {
                         fallbackSrc="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
                         borderRadius="full"
                         boxSize="64px"
-                        src={getValues().image_url}
+                        src={watchImageUrl}
                         alt="Developer Profile"
                       />
 

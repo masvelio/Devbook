@@ -25,7 +25,6 @@ import {
 } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
-import { gql, useQuery } from '@apollo/client';
 
 import {
   countryCodeToFlag,
@@ -33,34 +32,13 @@ import {
 } from '../../utils/countryUtils';
 import Rating from '../Rating';
 import Loading from '../Loading';
-import { GetMyDeveloperProfileQuery } from '../../generated/graphql';
+import { useGetMyDeveloperProfileQuery } from '../../generated/graphql';
 
 type DetailBlockProps = {
   CustomIcon: IconType;
   title: string;
   children: React.ReactNode;
 };
-
-export const GetSingleDevelopersProfile = gql`
-  query GetMyDeveloperProfile($developerId: Int) {
-    developers(where: { id: { _eq: $developerId } }) {
-      id
-      first_name
-      image_url
-      bio
-      github_url
-      country_code
-      job_position
-      last_name
-      linked_in_url
-      rating
-      super_powers
-      technologies
-      user_id
-      years_of_experience
-    }
-  }
-`;
 
 const DetailBlock = ({ CustomIcon, title, children }: DetailBlockProps) => (
   <Flex>
@@ -96,10 +74,11 @@ const DetailBlock = ({ CustomIcon, title, children }: DetailBlockProps) => (
 const DeveloperDetails = () => {
   const { id } = useParams();
 
-  const { loading, error, data } = useQuery<
-    GetMyDeveloperProfileQuery,
-    { developerId: string }
-  >(GetSingleDevelopersProfile, { variables: { developerId: id } });
+  const { data, loading, error } = useGetMyDeveloperProfileQuery({
+    variables: {
+      developerId: id,
+    },
+  });
 
   if (loading) {
     return <Loading />;
@@ -146,6 +125,7 @@ const DeveloperDetails = () => {
               borderRadius="full"
               boxSize="150px"
               src={image_url}
+              fallbackSrc="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
               alt={first_name}
             />
           </Center>

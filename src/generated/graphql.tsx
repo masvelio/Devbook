@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
@@ -19,7 +16,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /* eslint-disable-next-line */
   jsonb: any;
 };
 
@@ -98,6 +94,12 @@ export type DevelopersTechnologiesArgs = {
   path?: Maybe<Scalars['String']>;
 };
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Developers_Append_Input = {
+  super_powers?: Maybe<Scalars['jsonb']>;
+  technologies?: Maybe<Scalars['jsonb']>;
+};
+
 /** Boolean expression to filter rows from the table "developers". All fields are combined with a logical 'AND'. */
 export type Developers_Bool_Exp = {
   _and?: Maybe<Array<Developers_Bool_Exp>>;
@@ -119,6 +121,72 @@ export type Developers_Bool_Exp = {
   years_of_experience?: Maybe<Int_Comparison_Exp>;
 };
 
+/** unique or primary key constraints on table "developers" */
+export enum Developers_Constraint {
+  /** unique or primary key constraint */
+  DevelopersPkey = 'developers_pkey',
+  /** unique or primary key constraint */
+  DevelopersUserIdKey = 'developers_user_id_key',
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Developers_Delete_At_Path_Input = {
+  super_powers?: Maybe<Array<Scalars['String']>>;
+  technologies?: Maybe<Array<Scalars['String']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Developers_Delete_Elem_Input = {
+  super_powers?: Maybe<Scalars['Int']>;
+  technologies?: Maybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Developers_Delete_Key_Input = {
+  super_powers?: Maybe<Scalars['String']>;
+  technologies?: Maybe<Scalars['String']>;
+};
+
+/** input type for incrementing numeric columns in table "developers" */
+export type Developers_Inc_Input = {
+  rating?: Maybe<Scalars['Int']>;
+  years_of_experience?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "developers" */
+export type Developers_Insert_Input = {
+  bio?: Maybe<Scalars['String']>;
+  country_code?: Maybe<Scalars['String']>;
+  first_name?: Maybe<Scalars['String']>;
+  github_url?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  image_url?: Maybe<Scalars['String']>;
+  job_position?: Maybe<Scalars['String']>;
+  last_name?: Maybe<Scalars['String']>;
+  linked_in_url?: Maybe<Scalars['String']>;
+  rating?: Maybe<Scalars['Int']>;
+  super_powers?: Maybe<Scalars['jsonb']>;
+  technologies?: Maybe<Scalars['jsonb']>;
+  user_id?: Maybe<Scalars['String']>;
+  years_of_experience?: Maybe<Scalars['Int']>;
+};
+
+/** response of any mutation on the table "developers" */
+export type Developers_Mutation_Response = {
+  __typename?: 'developers_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Developers>;
+};
+
+/** on conflict condition type for table "developers" */
+export type Developers_On_Conflict = {
+  constraint: Developers_Constraint;
+  update_columns?: Array<Developers_Update_Column>;
+  where?: Maybe<Developers_Bool_Exp>;
+};
+
 /** Ordering options when selecting data from "developers". */
 export type Developers_Order_By = {
   bio?: Maybe<Order_By>;
@@ -135,6 +203,17 @@ export type Developers_Order_By = {
   technologies?: Maybe<Order_By>;
   user_id?: Maybe<Order_By>;
   years_of_experience?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: developers */
+export type Developers_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Developers_Prepend_Input = {
+  super_powers?: Maybe<Scalars['jsonb']>;
+  technologies?: Maybe<Scalars['jsonb']>;
 };
 
 /** select columns of table "developers" */
@@ -169,6 +248,50 @@ export enum Developers_Select_Column {
   YearsOfExperience = 'years_of_experience',
 }
 
+/** input type for updating data in table "developers" */
+export type Developers_Set_Input = {
+  bio?: Maybe<Scalars['String']>;
+  country_code?: Maybe<Scalars['String']>;
+  first_name?: Maybe<Scalars['String']>;
+  github_url?: Maybe<Scalars['String']>;
+  image_url?: Maybe<Scalars['String']>;
+  job_position?: Maybe<Scalars['String']>;
+  last_name?: Maybe<Scalars['String']>;
+  linked_in_url?: Maybe<Scalars['String']>;
+  rating?: Maybe<Scalars['Int']>;
+  super_powers?: Maybe<Scalars['jsonb']>;
+  technologies?: Maybe<Scalars['jsonb']>;
+  years_of_experience?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "developers" */
+export enum Developers_Update_Column {
+  /** column name */
+  Bio = 'bio',
+  /** column name */
+  CountryCode = 'country_code',
+  /** column name */
+  FirstName = 'first_name',
+  /** column name */
+  GithubUrl = 'github_url',
+  /** column name */
+  ImageUrl = 'image_url',
+  /** column name */
+  JobPosition = 'job_position',
+  /** column name */
+  LastName = 'last_name',
+  /** column name */
+  LinkedInUrl = 'linked_in_url',
+  /** column name */
+  Rating = 'rating',
+  /** column name */
+  SuperPowers = 'super_powers',
+  /** column name */
+  Technologies = 'technologies',
+  /** column name */
+  YearsOfExperience = 'years_of_experience',
+}
+
 /** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
 export type Jsonb_Comparison_Exp = {
   /** is the column contained in the given json value */
@@ -190,6 +313,55 @@ export type Jsonb_Comparison_Exp = {
   _lte?: Maybe<Scalars['jsonb']>;
   _neq?: Maybe<Scalars['jsonb']>;
   _nin?: Maybe<Array<Scalars['jsonb']>>;
+};
+
+/** mutation root */
+export type Mutation_Root = {
+  __typename?: 'mutation_root';
+  /** insert data into the table: "developers" */
+  insert_developers?: Maybe<Developers_Mutation_Response>;
+  /** insert a single row into the table: "developers" */
+  insert_developers_one?: Maybe<Developers>;
+  /** update data of the table: "developers" */
+  update_developers?: Maybe<Developers_Mutation_Response>;
+  /** update single row of the table: "developers" */
+  update_developers_by_pk?: Maybe<Developers>;
+};
+
+/** mutation root */
+export type Mutation_RootInsert_DevelopersArgs = {
+  objects: Array<Developers_Insert_Input>;
+  on_conflict?: Maybe<Developers_On_Conflict>;
+};
+
+/** mutation root */
+export type Mutation_RootInsert_Developers_OneArgs = {
+  object: Developers_Insert_Input;
+  on_conflict?: Maybe<Developers_On_Conflict>;
+};
+
+/** mutation root */
+export type Mutation_RootUpdate_DevelopersArgs = {
+  _append?: Maybe<Developers_Append_Input>;
+  _delete_at_path?: Maybe<Developers_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Developers_Delete_Elem_Input>;
+  _delete_key?: Maybe<Developers_Delete_Key_Input>;
+  _inc?: Maybe<Developers_Inc_Input>;
+  _prepend?: Maybe<Developers_Prepend_Input>;
+  _set?: Maybe<Developers_Set_Input>;
+  where: Developers_Bool_Exp;
+};
+
+/** mutation root */
+export type Mutation_RootUpdate_Developers_By_PkArgs = {
+  _append?: Maybe<Developers_Append_Input>;
+  _delete_at_path?: Maybe<Developers_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Developers_Delete_Elem_Input>;
+  _delete_key?: Maybe<Developers_Delete_Key_Input>;
+  _inc?: Maybe<Developers_Inc_Input>;
+  _prepend?: Maybe<Developers_Prepend_Input>;
+  _set?: Maybe<Developers_Set_Input>;
+  pk_columns: Developers_Pk_Columns_Input;
 };
 
 /** column ordering options */
@@ -249,7 +421,7 @@ export type Subscription_RootDevelopers_By_PkArgs = {
 };
 
 export type GetMyDeveloperProfileQueryVariables = Exact<{
-  userId?: Maybe<Scalars['String']>;
+  developerId?: Maybe<Scalars['Int']>;
 }>;
 
 export type GetMyDeveloperProfileQuery = { __typename?: 'query_root' } & {
@@ -274,9 +446,35 @@ export type GetMyDeveloperProfileQuery = { __typename?: 'query_root' } & {
   >;
 };
 
+export type GetDevelopersProfileQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetDevelopersProfileQuery = { __typename?: 'query_root' } & {
+  developers: Array<
+    { __typename?: 'developers' } & Pick<
+      Developers,
+      | 'id'
+      | 'first_name'
+      | 'image_url'
+      | 'bio'
+      | 'github_url'
+      | 'country_code'
+      | 'job_position'
+      | 'last_name'
+      | 'linked_in_url'
+      | 'rating'
+      | 'super_powers'
+      | 'technologies'
+      | 'user_id'
+      | 'years_of_experience'
+    >
+  >;
+};
+
 export const GetMyDeveloperProfileDocument = gql`
-  query GetMyDeveloperProfile($userId: String) {
-    developers(where: { user_id: { _eq: $userId } }) {
+  query GetMyDeveloperProfile($developerId: Int) {
+    developers(where: { id: { _eq: $developerId } }) {
       id
       first_name
       image_url
@@ -307,7 +505,7 @@ export const GetMyDeveloperProfileDocument = gql`
  * @example
  * const { data, loading, error } = useGetMyDeveloperProfileQuery({
  *   variables: {
- *      userId: // value for 'userId'
+ *      developerId: // value for 'developerId'
  *   },
  * });
  */
@@ -344,4 +542,74 @@ export type GetMyDeveloperProfileLazyQueryHookResult = ReturnType<
 export type GetMyDeveloperProfileQueryResult = Apollo.QueryResult<
   GetMyDeveloperProfileQuery,
   GetMyDeveloperProfileQueryVariables
+>;
+export const GetDevelopersProfileDocument = gql`
+  query GetDevelopersProfile {
+    developers {
+      id
+      first_name
+      image_url
+      bio
+      github_url
+      country_code
+      job_position
+      last_name
+      linked_in_url
+      rating
+      super_powers
+      technologies
+      user_id
+      years_of_experience
+    }
+  }
+`;
+
+/**
+ * __useGetDevelopersProfileQuery__
+ *
+ * To run a query within a React component, call `useGetDevelopersProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDevelopersProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDevelopersProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDevelopersProfileQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetDevelopersProfileQuery,
+    GetDevelopersProfileQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetDevelopersProfileQuery,
+    GetDevelopersProfileQueryVariables
+  >(GetDevelopersProfileDocument, options);
+}
+export function useGetDevelopersProfileLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetDevelopersProfileQuery,
+    GetDevelopersProfileQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetDevelopersProfileQuery,
+    GetDevelopersProfileQueryVariables
+  >(GetDevelopersProfileDocument, options);
+}
+export type GetDevelopersProfileQueryHookResult = ReturnType<
+  typeof useGetDevelopersProfileQuery
+>;
+export type GetDevelopersProfileLazyQueryHookResult = ReturnType<
+  typeof useGetDevelopersProfileLazyQuery
+>;
+export type GetDevelopersProfileQueryResult = Apollo.QueryResult<
+  GetDevelopersProfileQuery,
+  GetDevelopersProfileQueryVariables
 >;

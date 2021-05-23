@@ -1,37 +1,14 @@
 import React from 'react';
 import { SimpleGrid, Heading } from '@chakra-ui/react';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
-import { gql, useQuery } from '@apollo/client';
 
 import DeveloperCard from './DeveloperCard';
 import Loading from '../Loading';
-import { GetMyDeveloperProfileQuery } from '../../generated/graphql';
+import { useGetDevelopersProfileQuery } from '../../generated/graphql';
 import DevelopersLoading from './DevelopersLoading';
 
-export const GetDevelopersProfile = gql`
-  query GetDevelopersProfile {
-    developers {
-      id
-      first_name
-      image_url
-      bio
-      github_url
-      country_code
-      job_position
-      last_name
-      linked_in_url
-      rating
-      super_powers
-      technologies
-      user_id
-      years_of_experience
-    }
-  }
-`;
-
 const Developers = () => {
-  const { loading, error, data } =
-    useQuery<GetMyDeveloperProfileQuery>(GetDevelopersProfile);
+  const { loading, error, data } = useGetDevelopersProfileQuery();
 
   if (loading) {
     return <DevelopersLoading />;
