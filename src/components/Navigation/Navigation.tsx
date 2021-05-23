@@ -72,7 +72,7 @@ const Navigation = () => {
             fontWeight={600}
             colorScheme="blue"
             bg="blue.500"
-            onClick={() => logout()}
+            onClick={() => logout({ returnTo: window.location.origin })}
           >
             Log out
           </Button>
