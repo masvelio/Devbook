@@ -24,11 +24,17 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import countries from '../../utils/constants/countries';
 import { countryCodeToFlag } from '../../utils/countryUtils';
 import { PersonalInfoFormValues } from '../../types';
 import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
+
+const schema = yup.object().shape({
+  image_url: yup.string().url().required(),
+});
 
 const PersonalInfoForm = () => {
   const {
@@ -52,6 +58,7 @@ const PersonalInfoForm = () => {
       country_code,
       image_url,
     },
+    resolver: yupResolver(schema),
   });
 
   const watchImageUrl = watch('image_url', image_url);
@@ -109,7 +116,10 @@ const PersonalInfoForm = () => {
                 <Collapse in={!!errors.image_url} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
-                    Photo URL is required
+                    {errors.image_url?.message?.replace(
+                      'image_url',
+                      'Photo URL'
+                    )}
                   </Alert>
                 </Collapse>
               </Stack>
@@ -271,9 +281,7 @@ const PersonalInfoForm = () => {
                           id="image_url"
                           focusBorderColor="blue.400"
                           rounded="md"
-                          {...register('image_url', {
-                            required: true,
-                          })}
+                          {...register('image_url')}
                           isInvalid={!!errors.image_url}
                         />
                       </InputGroup>

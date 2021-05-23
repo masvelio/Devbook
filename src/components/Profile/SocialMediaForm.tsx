@@ -22,9 +22,16 @@ import {
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 import { SocialMediaFormValues } from '../../types';
+
+const schema = yup.object().shape({
+  github_url: yup.string().url(),
+  linked_in_url: yup.string().url(),
+});
 
 const SocialMediaForm = () => {
   const {
@@ -41,6 +48,7 @@ const SocialMediaForm = () => {
       github_url,
       linked_in_url,
     },
+    resolver: yupResolver(schema),
   });
 
   const onSubmit: SubmitHandler<SocialMediaFormValues> = (data) => {
@@ -72,13 +80,14 @@ const SocialMediaForm = () => {
                 <Collapse in={!!errors.github_url} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
-                    Github URL is required
+                    Github URL is invalid. Use form: https://github.com/profile
                   </Alert>
                 </Collapse>
                 <Collapse in={!!errors.linked_in_url} animateOpacity>
                   <Alert status="error">
                     <AlertIcon />
-                    LinkedIn URL is required
+                    LinkedIn URL is invalid. Use form:
+                    https://linkedin.com/profile
                   </Alert>
                 </Collapse>
               </Stack>
