@@ -46,7 +46,6 @@ const AuthenticatedApp = ({ idToken }: { idToken: string }) => {
         <Container maxW="container.lg">
           <Switch>
             <React.Suspense fallback={<Loading />}>
-              {/*<Redirect from="/" to="/profile" />*/}
               <Route exact path="/profile" component={Profile} />
               <Route
                 exact

@@ -100,7 +100,7 @@ const developerProfileFormReducer = (state: State, action: Action) => {
       };
     }
     case ActionType.CHANGE_TAB: {
-      if (!action.newTabIndex && state.currentTabIndex === 3) {
+      if (action.newTabIndex === undefined && state.currentTabIndex === 3) {
         return state;
       }
 

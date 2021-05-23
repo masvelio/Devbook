@@ -3,6 +3,7 @@ import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Button, Center, Box, useToast } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useHistory } from 'react-router-dom';
 
 import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 import DeveloperCard from '../Developers/DeveloperCard';
@@ -66,17 +67,42 @@ export const CreateProfile = gql`
   }
 `;
 
+export const UpdateProfile = gql`
+  mutation UpdateProfile($_set: developers_set_input, $_eq: String) {
+    update_developers(where: { user_id: { _eq: $_eq } }, _set: $_set) {
+      returning {
+        bio
+        country_code
+        first_name
+        github_url
+        id
+        image_url
+        job_position
+        last_name
+        linked_in_url
+        rating
+        technologies
+        user_id
+        super_powers
+        years_of_experience
+      }
+    }
+  }
+`;
+
 const FormPreview = () => {
+  const toast = useToast();
+  const history = useHistory();
   const { state, saveFormPartially } = useDeveloperProfileForm();
   const { user } = useAuth0();
-  const { isFormCompleted } = state;
-  const buttonLabel = state.formData?.id ? 'Update profile' : 'Create Profile';
-  const toast = useToast();
 
   const [createProfile, { loading: createProfileLoading }] = useMutation(
     CreateProfile,
     {
       onCompleted: (developerData) => {
+        const developerProfile = developerData.insert_developers.returning[0];
+        saveFormPartially(developerProfile);
+        history.push('/developers');
         toast({
           title: 'Profile created.',
           description: 'Added to the developers list.',
@@ -84,13 +110,28 @@ const FormPreview = () => {
           duration: 5000,
           isClosable: true,
         });
-        const developerProfile = developerData.insert_developers.returning[0];
-        saveFormPartially(developerProfile);
       },
     }
   );
 
-  const saveProfile = async () => {
+  const [updateProfile, { loading: updateProfileLoading }] = useMutation(
+    UpdateProfile,
+    {
+      onCompleted: (developerData) => {
+        const developerProfile = developerData.update_developers.returning[0];
+        saveFormPartially(developerProfile);
+        history.push('/developers');
+        toast({
+          title: 'Profile updated',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+      },
+    }
+  );
+
+  const createProfileHandler = async () => {
     const {
       bio = '',
       country_code,
@@ -128,6 +169,54 @@ const FormPreview = () => {
     });
   };
 
+  const updateProfileHandler = async () => {
+    const {
+      bio = '',
+      country_code,
+      first_name,
+      github_url,
+      image_url,
+      job_position,
+      last_name,
+      linked_in_url,
+      super_powers,
+      technologies,
+      years_of_experience,
+    } = state.formData as Developers;
+
+    await updateProfile({
+      variables: {
+        _set: {
+          bio,
+          country_code,
+          first_name,
+          github_url,
+          image_url,
+          job_position,
+          last_name,
+          linked_in_url,
+          super_powers,
+          technologies,
+          years_of_experience,
+        },
+        _eq: user?.sub,
+      },
+      refetchQueries: [
+        { query: GetDevelopersProfileDocument },
+        { query: GetSingleDevelopersProfile, variables: { userId: user?.sub } },
+      ],
+    });
+  };
+
+  const { isFormCompleted } = state;
+  const profileAlreadyExists = state.formData?.id;
+  const buttonLabel = profileAlreadyExists
+    ? 'Update profile'
+    : 'Create Profile';
+  const buttonHandler = profileAlreadyExists
+    ? updateProfileHandler
+    : createProfileHandler;
+
   return (
     <>
       <Box mt="5">
@@ -136,11 +225,11 @@ const FormPreview = () => {
       <Center mt="10">
         <Button
           minW="300"
-          isLoading={createProfileLoading}
+          isLoading={createProfileLoading || updateProfileLoading}
           loadingText="Loading"
           colorScheme="teal"
           spinnerPlacement="end"
-          onClick={saveProfile}
+          onClick={buttonHandler}
           disabled={!isFormCompleted}
         >
           {buttonLabel}

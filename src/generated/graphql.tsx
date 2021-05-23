@@ -545,7 +545,7 @@ export type GetMyDeveloperProfileQueryResult = Apollo.QueryResult<
 >;
 export const GetDevelopersProfileDocument = gql`
   query GetDevelopersProfile {
-    developers {
+    developers(order_by: { id: desc }) {
       id
       first_name
       image_url
