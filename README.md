@@ -1,59 +1,83 @@
-This project was bootstrapped with
-[Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">
+  <br>
+  <img width="100" src="https://github.com/masvelio/masvelio/blob/8d76a50fe3b37ddafe435a25f8a2e66b0d0b80cb/devbook/laptop.png?raw=true"/>
+  <br>
+  Devbook
+  <br>
+</h1>
 
-## Available Scripts
+<h4 align="center">The coolest programmers' place on the Internet</h4>
 
-In the project directory, you can run:
+<p align="center">
+  <a href="#overview">Overview</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#how-to-develop">How To Develop</a> •
+  <a href="#gallery">Gallery</a> •
+  <a href="#license">License</a>
+</p>
 
-### `yarn start`
+![screenshot](https://github.com/masvelio/masvelio/blob/db0bb9b90ab52a1e98bb1ed7b111f81613dcbed7/devbook/signin.png?raw=true)
 
-Runs the app in the development mode.<br /> Open
-[http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Overview
 
-The page will reload if you make edits.<br /> You will also see any lint errors
-in the console.
+Devbook is a fun project crafted "during the weekend". Its main goal is to play around with cool frontend technologies.
+The app mimics a social networking site for programmers that allows you to log in, create and edit a developer profile,
+view a list of all profiles, and view the details of each developer.
 
-### `yarn test`
+## Tech stack
 
-Launches the test runner in the interactive watch mode.<br /> See the section
-about
-[running tests](https://facebook.github.io/create-react-app/docs/running-tests)
-for more information.
+- React - UI Library
+- Chakra UI - components library
+- Apollo - GraphQL client
+- Hasura - GraphQL API engine
+- PostgreSQL - database handled by Hasura
+- Auth0 - authentication & authorization platform
+- Vercel - deployment platform
 
-### `yarn build`
+## How to use
 
-Builds the app for production to the `build` folder.<br /> It correctly bundles
-React in production mode and optimizes the build for the best performance.
+* App is available at [devbook-sepia.vercel.app](https://devbook-sepia.vercel.app/).
+* Sign in button redirects to Auth0 login page. It is possible to login with Google account or email/password method.
+  It is recommended, however, to use Signup button and create account with [disponsable email](https://temp-mail.org/pl/10minutemail).
+* It is possible to create a profile on `My profile` page once all necessary fields are filled out.
+* When the profile has been already created, it is possible to edit existing profile with the same form.
 
-The build is minified and the filenames include the hashes.<br /> Your app is
-ready to be deployed!
+### ⚠️ Disclaimer ⚠️
 
-See the section about
-[deployment](https://facebook.github.io/create-react-app/docs/deployment) for
-more information.
+```
+This is not production grade app. There are known issues here and there. 
+For example Auth0 signin works only on Desktop, Chrome, without Incognito mode.
+```
 
-### `yarn eject`
+## How to develop
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+# Clone this repository
+$ git clone https://github.com/masvelio/Devbook.git
 
-If you aren’t satisfied with the build tool and configuration choices, you can
-`eject` at any time. This command will remove the single build dependency from
-your project.
+# Go into the repository
+$ cd Devbook
 
-Instead, it will copy all the configuration files and the transitive
-dependencies (webpack, Babel, ESLint, etc) right into your project so you have
-full control over them. All of the commands except `eject` will still work, but
-they will point to the copied scripts so you can tweak them. At this point
-you’re on your own.
+# Install dependencies
+$ yarn
 
-You don’t have to ever use `eject`. The curated feature set is suitable for
-small and middle deployments, and you shouldn’t feel obligated to use this
-feature. However we understand that this tool wouldn’t be useful if you couldn’t
-customize it when you are ready for it.
+# Run the app on port 3000
+$ yarn start
 
-## Learn More
+# Run the tests
+$ yarn test
+```
 
-You can learn more in the
-[Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Gallery
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Form designed to create and edit developer profile
+![screenshot](https://github.com/masvelio/masvelio/blob/8d76a50fe3b37ddafe435a25f8a2e66b0d0b80cb/devbook/profile.png?raw=true)
+Developer's profile details
+![screenshot](https://github.com/masvelio/masvelio/blob/8d76a50fe3b37ddafe435a25f8a2e66b0d0b80cb/devbook/details.png?raw=true)
+List of developer profiles
+![screenshot](https://github.com/masvelio/masvelio/blob/8d76a50fe3b37ddafe435a25f8a2e66b0d0b80cb/devbook/profiles-list.png?raw=true)
+
+## License
+
+MIT
