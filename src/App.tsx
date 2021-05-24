@@ -6,9 +6,9 @@ import AuthenticatedApp from 'components/AuthenticatedApp';
 import UnauthenticatedApp from 'components/UnauthenticatedApp';
 
 const App = () => {
+  const [idToken, setIdToken] = React.useState<string>();
   const { isLoading, error, isAuthenticated, getAccessTokenSilently } =
     useAuth0();
-  const [idToken, setIdToken] = React.useState<string>();
 
   React.useEffect(() => {
     if (isAuthenticated) {

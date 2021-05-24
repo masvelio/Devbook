@@ -2,10 +2,11 @@ import React from 'react';
 import { Heading } from '@chakra-ui/react';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { useQuery } from '@apollo/client';
+import { useErrorHandler } from 'react-error-boundary';
 
 import Loading from 'components/Loading';
 import { GetMyDeveloperProfileQuery } from 'graphql/generatedGraphql';
-import GetSingleDevelopersProfile from 'graphql/queries/GetSingleDevelopersProfile';
+import GetSingleDevelopersProfile from './graphql/GetSingleDevelopersProfile';
 import { DeveloperProfileFormProvider } from './context/developerProfileFormContext';
 import ProfileForm from './ProfileForm';
 
@@ -16,13 +17,10 @@ const Profile = () => {
     GetMyDeveloperProfileQuery,
     { userId: string | undefined }
   >(GetSingleDevelopersProfile, { variables: { userId: user?.sub } });
+  useErrorHandler(error);
 
   if (loading) {
     return <Loading />;
-  }
-
-  if (error) {
-    return <div>Error!</div>;
   }
 
   return (

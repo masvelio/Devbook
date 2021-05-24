@@ -1,90 +1,18 @@
 import React from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Button, Center, Box, useToast } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router-dom';
 
-import { Developers, GetDevelopersProfileDocument } from 'graphql/generatedGraphql';
-import GetSingleDevelopersProfile from 'graphql/queries/GetSingleDevelopersProfile';
+import {
+  Developers,
+  GetDevelopersProfileDocument,
+} from 'graphql/generatedGraphql';
+import GetSingleDevelopersProfile from './graphql/GetSingleDevelopersProfile';
 import { useDeveloperProfileForm } from './context/developerProfileFormContext';
+import UpdateProfile from './graphql/UpdateProfile';
+import CreateProfile from './graphql/CreateProfile';
 import DeveloperCard from '../Developers/DeveloperCard';
-
-export const CreateProfile = gql`
-  mutation CreateProfile(
-    $bio: String
-    $country_code: String
-    $first_name: String
-    $github_url: String
-    $image_url: String
-    $job_position: String
-    $last_name: String
-    $linked_in_url: String
-    $rating: Int
-    $super_powers: jsonb
-    $technologies: jsonb
-    $user_id: String
-    $years_of_experience: Int
-  ) {
-    insert_developers(
-      objects: {
-        bio: $bio
-        country_code: $country_code
-        first_name: $first_name
-        github_url: $github_url
-        image_url: $image_url
-        job_position: $job_position
-        last_name: $last_name
-        linked_in_url: $linked_in_url
-        rating: $rating
-        super_powers: $super_powers
-        technologies: $technologies
-        user_id: $user_id
-        years_of_experience: $years_of_experience
-      }
-      on_conflict: { constraint: developers_user_id_key }
-    ) {
-      returning {
-        id
-        bio
-        country_code
-        first_name
-        github_url
-        image_url
-        job_position
-        last_name
-        linked_in_url
-        rating
-        super_powers
-        technologies
-        user_id
-        years_of_experience
-      }
-    }
-  }
-`;
-
-export const UpdateProfile = gql`
-  mutation UpdateProfile($_set: developers_set_input, $_eq: String) {
-    update_developers(where: { user_id: { _eq: $_eq } }, _set: $_set) {
-      returning {
-        bio
-        country_code
-        first_name
-        github_url
-        id
-        image_url
-        job_position
-        last_name
-        linked_in_url
-        rating
-        technologies
-        user_id
-        super_powers
-        years_of_experience
-      }
-    }
-  }
-`;
 
 const FormPreview = () => {
   const toast = useToast();
@@ -107,6 +35,15 @@ const FormPreview = () => {
           isClosable: true,
         });
       },
+      onError: (err) => {
+        toast({
+          title: 'Profile not created',
+          description: 'Check console for more details',
+          status: 'error',
+        });
+        // eslint-disable-next-line no-console
+        console.error(err);
+      },
     }
   );
 
@@ -120,9 +57,16 @@ const FormPreview = () => {
         toast({
           title: 'Profile updated',
           status: 'success',
-          duration: 5000,
-          isClosable: true,
         });
+      },
+      onError: (err) => {
+        toast({
+          title: 'Profile not updated',
+          description: 'Check console for more details',
+          status: 'error',
+        });
+        // eslint-disable-next-line no-console
+        console.error(err);
       },
     }
   );
@@ -199,7 +143,10 @@ const FormPreview = () => {
       },
       refetchQueries: [
         { query: GetDevelopersProfileDocument },
-        { query: GetSingleDevelopersProfile, variables: { userId: user?.sub } },
+        {
+          query: GetSingleDevelopersProfile,
+          variables: { userId: user?.sub },
+        },
       ],
     });
   };

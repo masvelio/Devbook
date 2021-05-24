@@ -25,7 +25,9 @@ type Action =
   | {
       type: ActionType.CALCULATE_IF_FORM_COMPLETED;
     };
+
 type Dispatch = (action: Action) => void;
+
 type State = {
   formData: Partial<Developers> | undefined;
   isFormCompleted: boolean;

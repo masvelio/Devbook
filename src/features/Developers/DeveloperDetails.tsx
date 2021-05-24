@@ -29,6 +29,7 @@ import { countryCodeToFlag, countryCodeToLabel } from 'utils/countryUtils';
 import { useGetMyDeveloperProfileQuery } from 'graphql/generatedGraphql';
 import Rating from 'components/Rating';
 import Loading from 'components/Loading';
+import { useErrorHandler } from 'react-error-boundary';
 
 type DetailBlockProps = {
   CustomIcon: IconType;
@@ -75,13 +76,10 @@ const DeveloperDetails = () => {
       developerId: id,
     },
   });
+  useErrorHandler(error);
 
   if (loading) {
     return <Loading />;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
   }
 
   const developer = data?.developers[0];
@@ -108,9 +106,6 @@ const DeveloperDetails = () => {
     super_powers,
     years_of_experience,
   } = developer;
-
-  // TODO make this dynamic
-  const rating = 4;
 
   return (
     <>
@@ -162,7 +157,7 @@ const DeveloperDetails = () => {
               </DetailBlock>
 
               <DetailBlock title="Rating" CustomIcon={FaTrophy}>
-                <Rating rating={rating} />
+                <Rating />
               </DetailBlock>
 
               <DetailBlock title="Experience" CustomIcon={FaFileSignature}>

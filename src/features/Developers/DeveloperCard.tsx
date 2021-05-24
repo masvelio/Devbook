@@ -59,10 +59,7 @@ const DeveloperCard = ({
     linked_in_url,
     technologies,
     id,
-  } = developer || { ...{} };
-
-  // TODO make this dynamic
-  const rating = 4;
+  } = developer || {};
 
   const isNameAvailable = first_name && last_name;
   const shouldDisplayPlaceholderTechnologies =
@@ -95,7 +92,7 @@ const DeveloperCard = ({
           {countryCodeToFlag(country_code)} {countryCodeToLabel(country_code)}
         </Text>
         <Center>
-          <Rating rating={rating} />
+          <Rating />
         </Center>
 
         <Stack

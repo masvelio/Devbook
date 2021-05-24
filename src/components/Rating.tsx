@@ -4,7 +4,7 @@ import { StarIcon } from '@chakra-ui/icons';
 
 import { Developers } from 'graphql/generatedGraphql';
 
-const Rating = ({ rating }: { rating: Developers['rating'] }) => (
+const Rating = ({ rating = 4 }: { rating?: Developers['rating'] }) => (
   <Box d="flex" mt="2" alignItems="center">
     {Array(5)
       .fill('')

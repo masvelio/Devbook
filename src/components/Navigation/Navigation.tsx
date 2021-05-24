@@ -80,7 +80,7 @@ const Navigation = () => {
         </Stack>
       </Flex>
       {isOpen && (
-        <Box position="absolute" w="full">
+        <Box position="absolute" w="full" zIndex="10">
           <Fade in={isOpen}>
             <MobileNav onClick={onToggle} />
           </Fade>
