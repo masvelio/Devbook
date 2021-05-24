@@ -3,15 +3,16 @@ import {
   Box,
   Flex,
   Text,
-  IconButton,
-  Button,
-  Stack,
   Fade,
-  useBreakpointValue,
+  Stack,
+  Button,
+  IconButton,
   useDisclosure,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useAuth0 } from '@auth0/auth0-react';
+
 import DesktopNav from './DesktopNav';
 import MobileNav from './MobileNav';
 

@@ -1,29 +1,28 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import {
-  Alert,
-  AlertIcon,
   Box,
+  Text,
+  Alert,
+  Input,
+  Stack,
   Button,
   chakra,
+  Heading,
   Collapse,
+  GridItem,
+  AlertIcon,
+  FormLabel,
+  SimpleGrid,
   FormControl,
   FormHelperText,
-  FormLabel,
-  GridItem,
-  Heading,
-  Input,
-  SimpleGrid,
-  Stack,
-  Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
-import MultiSelect from '../Multiselect';
-import technologiesList from '../../utils/constants/technologies';
-import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
-import { WorkExperienceFormValues } from '../../types';
+import technologiesList from 'utils/constants/technologies';
+import { WorkExperienceFormValues } from 'utils/types';
+import MultiSelect from 'components/Multiselect';
+import { useDeveloperProfileForm } from './context/developerProfileFormContext';
 
 type ReactSelectOption = { value: string; label: string };
 const SUPER_POWERS = 'super_powers';

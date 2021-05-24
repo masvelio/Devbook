@@ -1,9 +1,10 @@
+import React from 'react';
 import { Box } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
-import React from 'react';
-import { Developer } from '../types';
 
-const Rating = ({ rating }: { rating: Developer['rating'] }) => (
+import { Developers } from 'graphql/generatedGraphql';
+
+const Rating = ({ rating }: { rating: Developers['rating'] }) => (
   <Box d="flex" mt="2" alignItems="center">
     {Array(5)
       .fill('')

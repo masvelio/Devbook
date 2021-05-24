@@ -1,12 +1,11 @@
 import React from 'react';
-
 import {
-  Flex,
-  Stack,
-  Heading,
-  Button,
   Box,
+  Flex,
   Text,
+  Stack,
+  Button,
+  Heading,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';

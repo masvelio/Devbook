@@ -1,38 +1,34 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  chakra,
   Box,
   Flex,
-  Stack,
-  Center,
-  Image,
-  Heading,
   Text,
-  HStack,
   Link,
+  Stack,
+  Image,
+  chakra,
+  Center,
+  HStack,
   Button,
   VStack,
+  Heading,
 } from '@chakra-ui/react';
 import {
-  FaGlobeEurope,
-  FaTrophy,
-  FaFileSignature,
   FaCode,
+  FaTrophy,
   FaGithub,
   FaLinkedin,
+  FaGlobeEurope,
+  FaFileSignature,
 } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 
-import {
-  countryCodeToFlag,
-  countryCodeToLabel,
-} from '../../utils/countryUtils';
-import Rating from '../Rating';
-import Loading from '../Loading';
-import { useGetMyDeveloperProfileQuery } from '../../generated/graphql';
+import { countryCodeToFlag, countryCodeToLabel } from 'utils/countryUtils';
+import { useGetMyDeveloperProfileQuery } from 'graphql/generatedGraphql';
+import Rating from 'components/Rating';
+import Loading from 'components/Loading';
 
 type DetailBlockProps = {
   CustomIcon: IconType;

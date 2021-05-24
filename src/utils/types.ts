@@ -1,13 +1,8 @@
-import { Developers } from './generated/graphql';
+import { Developers } from 'graphql/generatedGraphql';
 
 export interface NavItem {
   label: string;
   href: string;
-}
-
-export interface Country {
-  code: string;
-  label: string;
 }
 
 export type PersonalInfoFormValues = Pick<

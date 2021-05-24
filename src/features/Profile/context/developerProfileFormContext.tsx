@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
-import { Developers } from '../generated/graphql';
+
+import { Developers } from 'graphql/generatedGraphql';
 import {
   PersonalInfoFormValues,
   SocialMediaFormValues,
   WorkExperienceFormValues,
-} from '../types';
+} from 'utils/types';
 
 enum ActionType {
   SAVE_FORM = 'SAVE_FORM',

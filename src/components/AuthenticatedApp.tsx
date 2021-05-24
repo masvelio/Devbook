@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Switch,
   Route,
-  // Redirect,
+  Redirect,
   BrowserRouter as Router,
 } from 'react-router-dom';
 import { Container } from '@chakra-ui/react';
@@ -13,16 +13,14 @@ import {
   HttpLink,
 } from '@apollo/client';
 
-import Navigation from './components/Navigation/Navigation';
-import DevelopersLoading from './components/Developers/DevelopersLoading';
-import Loading from './components/Loading';
+import DevelopersLoading from 'features/Developers/DevelopersLoading';
+import Navigation from './Navigation/Navigation';
+import Loading from './Loading';
 
-const Profile = React.lazy(() => import('./components/Profile/Profile'));
-const Developers = React.lazy(
-  () => import('./components/Developers/Developers')
-);
+const Profile = React.lazy(() => import('features/Profile/Profile'));
+const Developers = React.lazy(() => import('features/Developers/Developers'));
 const DeveloperDetails = React.lazy(
-  () => import('./components/Developers/DeveloperDetails')
+  () => import('features/Developers/DeveloperDetails')
 );
 
 const createApolloClient = (authToken: string) =>
@@ -46,6 +44,7 @@ const AuthenticatedApp = ({ idToken }: { idToken: string }) => {
         <Container maxW="container.lg">
           <Switch>
             <React.Suspense fallback={<Loading />}>
+              <Redirect exact from="/" to="/developers" />
               <Route exact path="/profile" component={Profile} />
               <Route
                 exact

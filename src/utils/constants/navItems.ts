@@ -1,4 +1,4 @@
-import { NavItem } from '../../types';
+import { NavItem } from 'utils/types';
 
 const NAV_ITEMS: Array<NavItem> = [
   {

@@ -2,8 +2,8 @@ import React from 'react';
 import { Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { Link as RouteLink } from 'react-router-dom';
 
-import { NavItem } from '../../types';
-import NAV_ITEMS from '../../utils/constants/navItems';
+import { NavItem } from 'utils/types';
+import NAV_ITEMS from 'utils/constants/navItems';
 
 type OnClickType = { onClick: () => void };
 

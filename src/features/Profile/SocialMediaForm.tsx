@@ -1,23 +1,22 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import {
-  Alert,
-  AlertIcon,
   Box,
+  Icon,
+  Text,
+  Alert,
+  Input,
+  Stack,
   Button,
   chakra,
-  Collapse,
-  FormControl,
-  FormLabel,
-  GridItem,
   Heading,
-  Icon,
-  Input,
+  Collapse,
+  GridItem,
+  AlertIcon,
+  FormLabel,
   InputGroup,
-  InputLeftAddon,
   SimpleGrid,
-  Stack,
-  Text,
+  FormControl,
+  InputLeftAddon,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -25,8 +24,8 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
-import { SocialMediaFormValues } from '../../types';
+import { SocialMediaFormValues } from 'utils/types';
+import { useDeveloperProfileForm } from './context/developerProfileFormContext';
 
 const schema = yup.object().shape({
   github_url: yup.string().url(),

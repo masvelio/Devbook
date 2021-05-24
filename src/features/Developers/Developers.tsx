@@ -2,9 +2,9 @@ import React from 'react';
 import { SimpleGrid, Heading } from '@chakra-ui/react';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 
+import { useGetDevelopersProfileQuery } from 'graphql/generatedGraphql';
+import Loading from 'components/Loading';
 import DeveloperCard from './DeveloperCard';
-import Loading from '../Loading';
-import { useGetDevelopersProfileQuery } from '../../generated/graphql';
 import DevelopersLoading from './DevelopersLoading';
 
 const Developers = () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import Loading from './components/Loading';
-import AuthenticatedApp from './AuthenticatedApp';
-import UnauthenticatedApp from './UnauthenticatedApp';
+import Loading from 'components/Loading';
+import AuthenticatedApp from 'components/AuthenticatedApp';
+import UnauthenticatedApp from 'components/UnauthenticatedApp';
 
 const App = () => {
   const { isLoading, error, isAuthenticated, getAccessTokenSilently } =

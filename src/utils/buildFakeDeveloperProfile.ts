@@ -1,11 +1,12 @@
 import faker from 'faker';
 import sampleSize from 'lodash.samplesize';
 
+import { Developers } from 'graphql/generatedGraphql';
 import countries from './constants/countries';
 import jobPositions from './constants/jobPositions';
 import technologies from './constants/technologies';
-import { Developers } from '../generated/graphql';
 
+/** Function used for mocking data before the database was hooked up */
 const buildFakeDeveloperProfile = (): Omit<
   Developers,
   'user_id' | 'id' | 'bio'

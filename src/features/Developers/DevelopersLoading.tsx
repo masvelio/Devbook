@@ -1,12 +1,12 @@
+import React from 'react';
 import {
   Box,
   Center,
   Heading,
   SimpleGrid,
-  SkeletonCircle,
   SkeletonText,
+  SkeletonCircle,
 } from '@chakra-ui/react';
-import React from 'react';
 
 const DevelopersLoading = () => (
   <>

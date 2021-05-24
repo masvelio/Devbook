@@ -1,17 +1,13 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Button, Center, Box, useToast } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router-dom';
 
-import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
+import { Developers, GetDevelopersProfileDocument } from 'graphql/generatedGraphql';
+import GetSingleDevelopersProfile from 'graphql/queries/GetSingleDevelopersProfile';
+import { useDeveloperProfileForm } from './context/developerProfileFormContext';
 import DeveloperCard from '../Developers/DeveloperCard';
-import {
-  Developers,
-  GetDevelopersProfileDocument,
-} from '../../generated/graphql';
-import GetSingleDevelopersProfile from '../../utils/queries/GetSingleDevelopersProfile';
 
 export const CreateProfile = gql`
   mutation CreateProfile(

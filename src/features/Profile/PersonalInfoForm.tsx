@@ -1,36 +1,35 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import {
   Box,
+  Flex,
+  Text,
+  Input,
+  Stack,
+  Alert,
+  Image,
   Button,
   chakra,
-  Flex,
-  FormControl,
-  FormLabel,
-  GridItem,
-  Heading,
-  Input,
-  InputGroup,
-  InputLeftAddon,
   Select,
-  SimpleGrid,
-  Stack,
-  Text,
+  Heading,
+  GridItem,
   Textarea,
-  Alert,
-  AlertIcon,
   Collapse,
-  Image,
+  FormLabel,
+  AlertIcon,
+  InputGroup,
+  SimpleGrid,
+  FormControl,
+  InputLeftAddon,
   useColorModeValue,
 } from '@chakra-ui/react';
+import * as yup from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 
-import countries from '../../utils/constants/countries';
-import { countryCodeToFlag } from '../../utils/countryUtils';
-import { PersonalInfoFormValues } from '../../types';
-import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
+import { PersonalInfoFormValues } from 'utils/types';
+import countries from 'utils/constants/countries';
+import { countryCodeToFlag } from 'utils/countryUtils';
+import { useDeveloperProfileForm } from './context/developerProfileFormContext';
 
 const schema = yup.object().shape({
   image_url: yup.string().url().required(),

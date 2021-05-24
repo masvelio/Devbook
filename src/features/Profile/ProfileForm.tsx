@@ -1,11 +1,10 @@
 import React from 'react';
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
+import { useDeveloperProfileForm } from './context/developerProfileFormContext';
 import PersonalInfoForm from './PersonalInfoForm';
 import WorkExperienceForm from './WorkExperienceForm';
 import SocialMediaForm from './SocialMediaForm';
-// import DeveloperCard from '../Developers/DeveloperCard';
-import { useDeveloperProfileForm } from '../../context/developerProfileFormContext';
 import FormPreview from './FormPreview';
 
 const ProfileForm = () => {

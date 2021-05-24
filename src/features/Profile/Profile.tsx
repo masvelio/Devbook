@@ -3,11 +3,11 @@ import { Heading } from '@chakra-ui/react';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { useQuery } from '@apollo/client';
 
+import Loading from 'components/Loading';
+import { GetMyDeveloperProfileQuery } from 'graphql/generatedGraphql';
+import GetSingleDevelopersProfile from 'graphql/queries/GetSingleDevelopersProfile';
+import { DeveloperProfileFormProvider } from './context/developerProfileFormContext';
 import ProfileForm from './ProfileForm';
-import Loading from '../Loading';
-import { DeveloperProfileFormProvider } from '../../context/developerProfileFormContext';
-import { GetMyDeveloperProfileQuery } from '../../generated/graphql';
-import GetSingleDevelopersProfile from '../../utils/queries/GetSingleDevelopersProfile';
 
 const Profile = () => {
   const { user } = useAuth0();

@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Link, Stack } from '@chakra-ui/react';
 import { Link as RouteLink } from 'react-router-dom';
 
-import NAV_ITEMS from '../../utils/constants/navItems';
-import { NavItem } from '../../types';
+import NAV_ITEMS from 'utils/constants/navItems';
+import { NavItem } from 'utils/types';
 
 const DesktopNavLink = ({ label, href }: NavItem) => (
   <Link

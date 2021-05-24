@@ -1,28 +1,24 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react';
 import {
-  Heading,
-  Avatar,
   Box,
-  Center,
   Text,
-  Stack,
-  Button,
-  Badge,
   Wrap,
-  HStack,
   Link,
+  Stack,
+  Badge,
+  Avatar,
+  Center,
+  Button,
+  HStack,
+  Heading,
 } from '@chakra-ui/react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link as RouteLink } from 'react-router-dom';
 
-import {
-  countryCodeToLabel,
-  countryCodeToFlag,
-} from '../../utils/countryUtils';
-import Rating from '../Rating';
-import defaultTechnologies from '../../utils/constants/technologies';
-import { Developers } from '../../generated/graphql';
+import { countryCodeToLabel, countryCodeToFlag } from 'utils/countryUtils';
+import defaultTechnologies from 'utils/constants/technologies';
+import { Developers } from 'graphql/generatedGraphql';
+import Rating from 'components/Rating';
 
 const TechnologiesBadges = ({
   shouldDisplayPlaceholderTechnologies,

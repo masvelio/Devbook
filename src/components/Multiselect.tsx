@@ -1,24 +1,24 @@
 /* eslint-disable no-underscore-dangle */
 // @ts-nocheck
 
-// component from https://gist.github.com/csandman/c687a9fb4275112f281ab9a5701457e4
+// component used from https://gist.github.com/csandman/c687a9fb4275112f281ab9a5701457e4
 import React from 'react';
 import Select, { components as selectComponents } from 'react-select';
 import {
-  Flex,
   Tag,
-  TagCloseButton,
-  TagLabel,
-  Divider,
-  CloseButton,
-  Center,
   Box,
+  Flex,
+  Center,
   Portal,
-  StylesProvider,
-  useMultiStyleConfig,
-  useStyles,
+  Divider,
+  TagLabel,
   useTheme,
+  useStyles,
+  CloseButton,
+  TagCloseButton,
+  StylesProvider,
   useColorModeValue,
+  useMultiStyleConfig,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
