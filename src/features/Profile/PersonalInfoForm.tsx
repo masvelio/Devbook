@@ -32,6 +32,10 @@ import { countryCodeToFlag } from 'utils/countryUtils';
 import { useDeveloperProfileForm } from './context/developerProfileFormContext';
 
 const schema = yup.object().shape({
+  first_name: yup.string().required(),
+  last_name: yup.string().required(),
+  bio: yup.string().required(),
+  country_code: yup.string().required(),
   image_url: yup.string().url().required(),
 });
 
@@ -156,9 +160,7 @@ const PersonalInfoForm = () => {
                       size="sm"
                       w="full"
                       rounded="md"
-                      {...register('first_name', {
-                        required: true,
-                      })}
+                      {...register('first_name')}
                       isInvalid={!!errors.first_name}
                     />
                   </FormControl>
@@ -182,9 +184,7 @@ const PersonalInfoForm = () => {
                       w="full"
                       rounded="md"
                       isInvalid={!!errors.last_name}
-                      {...register('last_name', {
-                        required: true,
-                      })}
+                      {...register('last_name')}
                     />
                   </FormControl>
 
@@ -205,9 +205,7 @@ const PersonalInfoForm = () => {
                       id="bio"
                       focusBorderColor="blue.400"
                       fontSize={{ sm: 'sm' }}
-                      {...register('bio', {
-                        required: true,
-                      })}
+                      {...register('bio')}
                       isInvalid={!!errors.bio}
                     />
                   </FormControl>
@@ -230,9 +228,7 @@ const PersonalInfoForm = () => {
                       size="sm"
                       w="full"
                       rounded="md"
-                      {...register('country_code', {
-                        required: true,
-                      })}
+                      {...register('country_code')}
                       isInvalid={!!errors.country_code}
                     >
                       {countries.map((country) => (
